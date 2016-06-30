@@ -12,7 +12,18 @@ use \oat\taoSearch\model\search\QueryParamInterface;
 
 class QueryParam implements QueryParamInterface {
     
+    protected $name;
     
+    protected $operator;
+    
+    protected $value;
+    
+    protected $separator;
+    
+    protected $and = [];
+    
+    protected $or = [];
+
     public function addAnd($name, $operator, $value) {
         
     }
@@ -42,6 +53,10 @@ class QueryParam implements QueryParamInterface {
     }
 
     public function setValue($value) {
+        
+    }
+    
+    public function setAndSeparator($separator) {
         
     }
 
