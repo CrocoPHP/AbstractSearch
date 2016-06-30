@@ -18,50 +18,28 @@ interface QueryBuilderInterface {
 
     /**
      * change default query param className
-     * @param string $queryParamsClassName
+     * @param string $queryClassName
      * @return $this
      */
-    public function setQueryParamClassName($queryParamsClassName);
+    public function setQueryClassName($queryClassName);
 
     /**
      * change default query param factory
      * @param callable $factory
      * @return $this
      */
-    public function setQueryParamFactory(callable $factory);
+    public function setQueryFactory(callable $factory);
 
     /**
-     * return query params list as array of QueryParamInterface
+     * return query params list as array of QueryInterface
      * @return array
      */
-    public function getQuery();
-
+    public function getStoredQueries();
+    
     /**
-     * create and store a new QueryParamInterface
-     * @param string $name
-     * @param string $operator
-     * @param mixed $value
-     * @param bool $andSeparator true for and , false for or
-     * @return QueryParamInterface
+     * create a new query and stored it
+     * @return QueryInterface
      */
-    public function addOperation($name , $operator , $value , $andSeparator = true);
-
-    /**
-     * set query limit
-     *
-     * @param int $start
-     * @param int $offset
-     * @return $this
-     */
-    public function setOffset($start , $offset);
-
-    /**
-     * set up sort criteria
-     * as ['name' => 'desc' , 'age' => 'asc']
-     *
-     * @param array $sortCriteria
-     * @return $this
-     */
-    public function sort(array $sortCriteria);
-
+    public function newQuery();
+   
 }

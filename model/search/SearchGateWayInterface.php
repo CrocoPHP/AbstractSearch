@@ -30,8 +30,21 @@ interface SearchGateWayInterface
      * @return $this
      */
     public function setOptions(array $options);
-
+    
     /**
+     * set up database connector if needed
+     * @param mixed connector
+     * @return $this
+     */
+    public function setConnector($connector);
+    
+    /**
+     * return database connector
+     * @return mixed
+     */
+    public function getConnector();
+
+        /**
      * try to connect to database. throw an exception
      * if connection failed.
      *
@@ -81,7 +94,7 @@ interface SearchGateWayInterface
      * throw an exception if an error occured
      *
      * @throws SearchGateWayExeption
-     * @param array $object
+     * @param mixed $id
      * @return boolean
      */
     public function delete($id);

@@ -37,30 +37,30 @@ interface QueryParamInterface {
     public function setOperator($operator);
 
     /**
-     * set `and` condition on same property.
-     * you can specify a different operator or null to use default operator
+     * set `and` condition.
      * use full for array properties
      *
      * for example test.id = [1 , 12 , 50]
      * test.id contain 1 and test.id contain 12
      *
+     * @params string $name
      * @param mixed $value
      * @param null|int $operator
      * @return $this
      */
-    public function addAnd($value , $operator = null);
+    public function addAnd($name , $operator , $value);
 
     /**
-     * set `or` condition on same property.
-     * you can specify a different operator or null to use default operator
+     * set `or` condition.
      *
      * for example : name equal 'christophe' or name begin by 'b'
      *
+     * @params string $name
      * @param mixed $value
      * @param null|int $operator
      * @return $this
      */
-    public function addOr($value , $operator = null);
+    public function addOr($name , $operator ,  $value);
 
     /**
      * return param name
