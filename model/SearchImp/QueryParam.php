@@ -26,38 +26,52 @@ class QueryParam implements QueryParamInterface {
 
     public function addAnd($name, $operator, $value) {
         
+        $param = new self();
+        $param->setName($name)->setOperator($operator)->setValue($value);
+        $this->and[] = $param;
+        return $this;
     }
 
     public function addOr($name, $operator, $value) {
         
+        $param = new self();
+        $param->setName($name)->setOperator($operator)->setValue($value);
+        $this->or[] = $param;
+        return $this;
     }
 
     public function getName() {
-        
+        return $this->name;
     }
 
     public function getOperator() {
-        
+        return $this->operator;
     }
 
     public function getValue() {
-        
+        return $this->value;
     }
-
+    
+    public function getSeparator() {
+        return $this->separator;
+    }
+    
     public function setName($name) {
-        
+        $this->name = $name;
+        return $this;
     }
 
     public function setOperator($operator) {
-        
+        $this->operator = $operator;
+        return $this;
     }
 
     public function setValue($value) {
-        
+        $this->value = $value;
     }
     
     public function setAndSeparator($separator) {
-        
+        $this->separator = $separator;
     }
 
 }

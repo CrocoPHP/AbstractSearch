@@ -35,6 +35,14 @@ interface QueryParamInterface {
      * @return $this
      */
     public function setOperator($operator);
+    
+    /**
+     * set separator with next query.
+     * 
+     * @param boolean $separator
+     * @return $this
+     */
+    public function setAndSeparator($separator);
 
     /**
      * set `and` condition.
@@ -79,5 +87,10 @@ interface QueryParamInterface {
      * @return mixed
      */
     public function getOperator();
+    /**
+     * return true for AND and false for OR
+     * @return boolean
+     */
+    public function getSeparator();
 
 }
