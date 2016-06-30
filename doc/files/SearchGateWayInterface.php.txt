@@ -98,5 +98,46 @@ interface SearchGateWayInterface
      * @return boolean
      */
     public function delete($id);
+    
+    /**
+     * change default parser factory
+     * 
+     * @param callable $factory
+     * @return $this
+     */
+    public function setParserFactory(callable $factory);
+    
+    /**
+     * set up a new parser
+     * @return QueryParserInterface
+     */
+    public function getParser();
 
+     /**
+      * return GateWay DriverName
+     * @return string  
+     */
+    public function getDriverName();
+    
+    /**
+     * change default resultSet factory
+     * 
+     * @param callable $factory
+     * @return $this
+     */
+    public function setResultSetFactory(callable $factory);
+    
+    /**
+     * change default resultSet class name
+     * 
+     * @param string $resultSetClassName
+     * @return $this
+     */
+    public function setResultSetClassName($resultSetClassName);
+    
+    /**
+     * return resultSet class name
+     * @return string
+     */
+    public function getResultSetClassName();
 }

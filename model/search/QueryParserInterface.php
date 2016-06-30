@@ -35,5 +35,24 @@ interface QueryParserInterface {
      * @return mixed
      */
     public function parse();
+    
+    /**
+     * set up query result cache storage
+     * @param QueryParserCacheInterface $cache
+     * @return $this
+     */
+    public function setCacheStorage(QueryParserCacheInterface $cache);
+    
+    /**
+     * enable cache for query transaltion result
+     * @return $this
+     */
+    public function disableCache();
+    
+    /**
+     * disable cache for query transaltion result
+     * @return $this
+     */
+    public function enableCache();
 
 }
