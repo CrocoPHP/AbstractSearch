@@ -36,5 +36,7 @@ class SupportedOperatorHelper {
     const MATCH   = 'match';
 
     const CONTAIN = 'contain';
+    
+    const BEGIN_BY = 'begin';
 
 }

@@ -9,8 +9,14 @@
 namespace oat\taoSearch\model\searchImp;
 
 use \oat\taoSearch\model\search\QueryBuilderInterface;
+use \oat\taoSearch\model\search\UsableTrait\LimitableTrait;
+use \oat\taoSearch\model\search\UsableTrait\SortableTrait;
 
 class QueryBuilder implements QueryBuilderInterface {
+    
+    use SortableTrait;
+    use LimitableTrait;
+    
     /**
      * @var array
      */
@@ -34,7 +40,10 @@ class QueryBuilder implements QueryBuilderInterface {
      * @inherit
      */
     public function newQuery() {
-        return $this->factory($this->queryClassName);
+        $factory = $this->factory;
+        $query = $factory($this->queryClassName);
+        $this->storedQueries[] = $query;
+        return $query;
     }
     
     /**

@@ -11,56 +11,42 @@ namespace oat\taoSearch\model\searchImp;
 use \oat\taoSearch\model\search\QueryInterface;
 
 class Query implements QueryInterface {
+
     
     protected $storedQueryParams = [];
     
     protected $factory;
     
-    protected $sort = [];
+    protected $queryParamClassName = 'oat\\taoSearch\\model\\searchImp\\QueryParam';
     
-    protected $start;
-    
-    protected $offset;
-    
-    protected $queryParamClassName;
+    public function __construct() {
+        $this->factory = function ($className , $arguments) {
+            $Param = new $className();
+            $Param->setName($arguments[0]);
+            $Param->setOperator($arguments[1]);
+            $Param->setValue($arguments[2]);
+            $Param->setAndSeparator($arguments[3]);
+            
+            return $Param;
+        };
+    }
+
 
     /**
      * @inherit
      */
     public function addOperation($name, $operator, $value, $andSeparator = true) {
-    return $this->factory($this->queryParamClassName , [$name, $operator, $value, $andSeparator]);
+        $factory = $this->factory;
+        $param = $factory($this->queryParamClassName , [$name, $operator, $value, $andSeparator]);
+        $this->storedQueryParams[] = $param;
+        return $param;
     }
-    /**
-     * @inherit
-     */
-    public function getOffset() {
-        return $this->offset;
-    }
-    /**
-     * @inherit
-     */
-    public function getSort() {
-        return $this->sort;
-    }
-    /**
-     * @inherit
-     */
-    public function getStart() {
-        return $this->start;
-    }
+    
     /**
      * @inherit
      */
     public function getStoredQueryParams() {
         return $this->storedQueryParams;
-    }
-    /**
-     * @inherit
-     */
-    public function setOffset($start, $offset) {
-        $this->start = $start;
-        $this->offset = $offset;
-        return $this;
     }
     /**
      * @inherit
@@ -74,13 +60,6 @@ class Query implements QueryInterface {
      */
     public function setQueryParamFactory(callable $factory) {
         $this->factory = $factory;
-        return $this;
-    }
-    /**
-     * @inherit
-     */
-    public function sort(array $sortCriteria) {
-        $this->sort = $sortCriteria;
         return $this;
     }
 

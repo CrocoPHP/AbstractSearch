@@ -14,7 +14,7 @@ namespace oat\taoSearch\model\search;
  *
  * @package oat\taoSearch\model\search
  */
-interface QueryBuilderInterface {
+interface QueryBuilderInterface extends LimitableInterface, SortableInterface {
 
     /**
      * change default query param className

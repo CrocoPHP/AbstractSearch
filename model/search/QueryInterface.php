@@ -36,42 +36,6 @@ interface QueryInterface {
      * @return QueryParamInterface
      */
     public function addOperation($name , $operator , $value , $andSeparator = true);
-
-    /**
-     * set query limit
-     *
-     * @param int $start
-     * @param int $offset
-     * @return $this
-     */
-    public function setOffset($start , $offset);
-
-    /**
-     * set up sort criteria
-     * as ['name' => 'desc' , 'age' => 'asc']
-     *
-     * @param array $sortCriteria
-     * @return $this
-     */
-    public function sort(array $sortCriteria);
-    
-    /**
-     * return sort criterias
-     * @return array
-     */
-    public function getSort();
-    
-    /**
-     * return start item
-     * @return int
-     */
-    public function getStart();
-    
-    /**
-     * return query offest
-     * @return int
-     */
-    public function getOffset();
     
     /**
      * return all query params object stored

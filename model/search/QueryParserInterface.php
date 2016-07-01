@@ -18,8 +18,15 @@ use oat\taoSearch\model\search\command\OperatorConverterInterface;
  * @package oat\taoSearch\model\search
  */
 interface QueryParserInterface {
-
+    
     /**
+     * create query base
+     * @param array $options
+     * @return $this
+     */
+    public function prefixQuery(array $options);
+
+        /**
      * transform QueryBuilderInterface to an exploitable criteria list
      *
      * @param QueryBuilderInterface $criteriaList

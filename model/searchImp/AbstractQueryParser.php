@@ -24,7 +24,9 @@ abstract class AbstractQueryParser implements QueryParserInterface {
     protected $cacheStorage;
     
     protected $query;
-    
+    /**
+     * @var QueryBuilderInterface 
+     */
     protected $criteriaList;
     
     protected $supportedOperators = [];
@@ -34,6 +36,9 @@ abstract class AbstractQueryParser implements QueryParserInterface {
     protected $queryPrefix;
     
     protected $operatorNameSpace;
+    
+    protected $options = [];
+
 
     public function disableCache() {
         $this->cache = false;
@@ -52,19 +57,23 @@ abstract class AbstractQueryParser implements QueryParserInterface {
 
     public function setCriteriaList(QueryBuilderInterface $criteriaList) {
         $this->criteriaList = $criteriaList;
+        return $this;
     }
 
     public function parse() {
         
-        foreach ($this->criteriaList as $query) {
+        $this->query = $this->queryPrefix;
+        
+        foreach ($this->criteriaList->getStoredQueries() as $query) {
             $this->parseQuery($query);
         }
         
+        $this->finishQuery();
         return $this->query;
     }
     
     protected function parseQuery(QueryInterface $query) {
-        foreach ($query as $operation) {
+        foreach ($query->getStoredQueryParams() as $operation) {
             $this->parseOperation($operation);
         }
     }
@@ -90,16 +99,38 @@ abstract class AbstractQueryParser implements QueryParserInterface {
         }
         
         $this->setNextSeparator($operation->getSeparator());
-        $this->addOperator($this->getOperator($operation->getOperator())->convert($operation));
+        
+        $this->prepareOperator();
+        $command = $this->getOperator($operation->getOperator())->convert($operation);
+        
+        $command = $this->setConditions($command , $operation->getAnd(), 'and');
+        $command = $this->setConditions($command , $operation->getOr(), 'or');
+        
+        $this->addOperator($command);
+        
+        return $this;
         
     }
     /**
+     * @inherit
+     */
+    protected function setConditions(&$command , array $conditionList , $separator = 'and') {
+        foreach($conditionList as $condition) {
+            
+            $addCondition = $this->getOperator($condition->getOperator())->convert($condition);
+            $this->mergeCondition($command , $addCondition , $separator);
+            
+        }
+        return $command;
+    }
+
+        /**
      * @return \oat\taoSearch\model\search\command\OperatorConverterInterface
      */
     protected function getOperator($operator) {
          
         if(array_key_exists($operator, $this->supportedOperators)) {
-            $this->prepareOperator();
+            
             $operatorClass = $this->operatorNameSpace . '\\' . ($this->supportedOperators[$operator]);
             return new $operatorClass();
         }
@@ -116,26 +147,49 @@ abstract class AbstractQueryParser implements QueryParserInterface {
         }
         $this->nextSeparator = $and;
     }
+    
+    /**
+     * change your merge process
+     * merge array, concat string, fetch object .....
+     * 
+     * @param mixed $command main query 
+     * @param mixed $condition condition to merger
+     * @return $this;
+     */
+    abstract protected function mergeCondition(&$command , $condition, $separator = null);
+    
     /**
      * @param array $options
      * @return $this;
      */
-    abstract public function prefixQuery(array $options);
+    abstract public  function prefixQuery(array $options);
     
     /**
      * @return $this;
      */
-    abstract public function prepareOperator();
+    abstract protected  function prepareOperator();
     
     /**
      * @param string $expression
      * @return $this;
      */
-    abstract public function addOperator($expression);
+    abstract protected  function addOperator($expression);
     
      /**
       *  @param boolean $and
       * @return $this
      */
-    abstract function addSeparator($and);
+    abstract protected function addSeparator($and);
+    /**
+     * parse limitable queries
+     */
+    abstract protected function addLimit($limit, $offset = null);
+    
+    /**
+     * parse sort criteria
+     */
+    abstract protected function addSort(array $sort);
+    
+    abstract protected function finishQuery();
+    
 }
