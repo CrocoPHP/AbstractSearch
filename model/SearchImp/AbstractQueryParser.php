@@ -68,13 +68,20 @@ abstract class AbstractQueryParser implements QueryParserInterface {
             $this->parseOperation($operation);
         }
     }
-    
+
+    /**
+     * @param QueryParamInterface $operation
+     */
     protected function parseOperation(QueryParamInterface $operation) {
         
         $value = $operation->getValue();
         
         if(is_a($value, '\\oat\\taoSearch\\model\\search\\QueryBuilderInterface')) {
-            $parser = new self();
+            $me = (get_class($this));
+            /**
+             * @var self $parser
+             */
+            $parser = new $me();
             $value = $parser->setCriteriaList($value)->parse();
             $operation->setValue($value);
         } else if(is_a($value, '\\oat\\taoSearch\\model\\search\\QueryInterface')) {
@@ -93,7 +100,7 @@ abstract class AbstractQueryParser implements QueryParserInterface {
          
         if(array_key_exists($operator, $this->supportedOperators)) {
             $this->prepareOperator();
-            $operatorClass = $this->operatorNameSpace . '\\' . $this->supportedOperators[$operator];
+            $operatorClass = $this->operatorNameSpace . '\\' . ($this->supportedOperators[$operator]);
             return new $operatorClass();
         }
         throw new QueryParsingException('this driver doesn\'t support ' . $operator . ' operator');
@@ -121,12 +128,14 @@ abstract class AbstractQueryParser implements QueryParserInterface {
     abstract public function prepareOperator();
     
     /**
+     * @param string $expression
      * @return $this;
      */
-    abstract public function addOperator();
+    abstract public function addOperator($expression);
     
      /**
-     *  @param boolean $and
+      *  @param boolean $and
+      * @return $this
      */
     abstract function addSeparator($and);
 }
