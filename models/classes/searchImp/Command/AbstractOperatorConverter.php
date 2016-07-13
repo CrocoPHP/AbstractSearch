@@ -35,6 +35,7 @@ abstract class AbstractOperatorConverter implements OperatorConverterInterface {
     use DriverSensitiveTrait;
     
     /**
+     * operator string exploitable by database system
      * @var string 
      */
     protected $operator = '';

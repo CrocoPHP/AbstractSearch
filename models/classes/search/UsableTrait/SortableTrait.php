@@ -23,21 +23,30 @@ namespace oat\taoSearch\model\search\UsableTrait;
 /**
  * use with sortableInterface
  *
- * @author christophe
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 trait SortableTrait {
     /**
      * array of sort criterias
+     * @var array
      */
     protected $sort = [];
 
     /**
+     * return sort criterias
+     * @return array
      * @see \oat\taoSearch\model\search\SortableInterface::getSort
      */
     public function getSort() {
         return $this->sort;
     }
     /**
+     * set up sort criteria
+     * as ['name' => 'desc' , 'age' => 'asc']
+     *
+     * @param array $sortCriteria
+     * @return $this
+     *
      * @see \oat\taoSearch\model\search\SortableInterface::sort
      */
     public function sort(array $sortCriteria) {

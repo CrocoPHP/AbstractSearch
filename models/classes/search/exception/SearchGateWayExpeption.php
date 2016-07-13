@@ -20,7 +20,9 @@
  */
 
 namespace oat\taoSearch\model\search\exception;
-
+/**
+ * thown when SearchGateway encounter a problem
+ */
 class SearchGateWayExeption extends \Exception
 {
 

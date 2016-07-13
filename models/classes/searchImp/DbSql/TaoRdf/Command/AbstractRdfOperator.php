@@ -26,7 +26,7 @@ use \oat\taoSearch\model\search\QueryParamInterface;
 /**
  * Description of AbstractRdfOperator
  *
- * @author christophe
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 class AbstractRdfOperator extends AbstractOperatorConverter {
     
@@ -38,8 +38,10 @@ class AbstractRdfOperator extends AbstractOperatorConverter {
         return $this->getDriverEscaper()->dbCommand($this->operator);
     }
 
-        /**
-     * @inherit
+    /**
+     * set up predicate name condition
+     * @param string $name
+     * @return string
      */
     protected function setPropertyName($name) {
         if(!empty($name)) {
@@ -51,7 +53,9 @@ class AbstractRdfOperator extends AbstractOperatorConverter {
         return '';
     }
     /**
-     * @inherit
+     * {@inheritdoc}
+     * @param QueryParamInterface $query
+     * @return string
      */
     public function convert(QueryParamInterface $query) {
         $value = $this->getDriverEscaper()->escape($query->getValue());

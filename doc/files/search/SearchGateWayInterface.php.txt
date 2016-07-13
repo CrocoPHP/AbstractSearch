@@ -1,13 +1,30 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: chris
- * Date: 24/06/16
- * Time: 10:39
+/**  
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *               
+ * 
  */
 
 namespace oat\taoSearch\model\search;
+
+use oat\taoSearch\model\factory\FactoryInterface;
 use oat\taoSearch\model\search\exception\SearchGateWayExeption;
+use oat\taoSearch\model\search\Query\DriverSensitiveInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * Interface SearchGateWayInterface
@@ -16,21 +33,13 @@ use oat\taoSearch\model\search\exception\SearchGateWayExeption;
  *
  * @package oat\taoSearch\model\search
  */
-interface SearchGateWayInterface
+interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterface, ServiceLocatorAwareInterface
 {
     /**
-     * return connection options
-     * @return array
+     * intitialyse your gateway
      */
-    public function getOptions();
+    public function init();
 
-    /**
-     * set up connection option
-     * @param array $options
-     * @return $this
-     */
-    public function setOptions(array $options);
-    
     /**
      * set up database connector if needed
      * @param mixed connector
@@ -61,51 +70,15 @@ interface SearchGateWayInterface
      * @param $query
      * @return ResultSetInterface
      */
-    public function select($query);
+    public function search($query);
 
-    /**
-     * update operation. true on success
-     * false on failure.
-     *
-     * throw an exception if an error occured
-     *
-     * @throws SearchGateWayExeption
-     * @param array $object
-     * @return boolean
-     */
-    public function update($object);
-
-    /**
-     * insert operation. true on success
-     * false on failure.
-     *
-     * throw an exception if an error occured
-     *
-     * @throws SearchGateWayExeption
-     * @param array $object
-     * @return boolean
-     */
-    public function insert($object);
-
-    /**
-     * delete operation. true on success
-     * false on failure.
-     *
-     * throw an exception if an error occured
-     *
-     * @throws SearchGateWayExeption
-     * @param mixed $id
-     * @return boolean
-     */
-    public function delete($id);
-    
     /**
      * change default parser factory
      * 
-     * @param callable $factory
+     * @param FactoryInterface $factory
      * @return $this
      */
-    public function setParserFactory(callable $factory);
+    public function setParserFactory(FactoryInterface $factory);
     
     /**
      * set up a new parser
@@ -122,13 +95,33 @@ interface SearchGateWayInterface
     /**
      * change default resultSet factory
      * 
-     * @param callable $factory
+     * @param FactoryInterface $factory
      * @return $this
      */
-    public function setResultSetFactory(callable $factory);
+    public function setResultSetFactory(FactoryInterface $factory);
     
     /**
-     * change default resultSet class name
+     * create a new Query builder
+     * @return QueryBuilderInterface
+     */
+    public function query();
+    
+    /**
+     * change default resultSet service alias or class name
+     * 
+     * @param string $resultSetClassName
+     * @return $this
+     */
+    public function setBuilderClassName($resultSetClassName);
+    
+    /**
+     * return resultSet service alias or class name
+     * @return string
+     */
+    public function getBuilderSetClassName();
+    
+     /**
+     * change default resultSet service alias or class name
      * 
      * @param string $resultSetClassName
      * @return $this
@@ -136,8 +129,9 @@ interface SearchGateWayInterface
     public function setResultSetClassName($resultSetClassName);
     
     /**
-     * return resultSet class name
+     * return resultSet service alias or class name
      * @return string
      */
     public function getResultSetClassName();
+    
 }

@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/oat.html">\oat</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">72</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2027152586"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-2027152586" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-34196984"></a>
+                                <a href="../namespaces/oat.html" style="margin-left: 30px; padding-left: 0">oat</a>
+            </div>
+            <div id="namespace-34196984" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1450174684"></a>
+                                <a href="../namespaces/oat.taoSearch.html" style="margin-left: 30px; padding-left: 0">taoSearch</a>
+            </div>
+            <div id="namespace-1450174684" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-783583379"></a>
+                                <a href="../namespaces/oat.taoSearch.model.html" style="margin-left: 30px; padding-left: 0">model</a>
+            </div>
+            <div id="namespace-783583379" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1704015148"></a>
+                                <a href="../namespaces/oat.taoSearch.model.factory.html" style="margin-left: 30px; padding-left: 0">factory</a>
+            </div>
+            <div id="namespace-1704015148" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.factory.FactoryInterface.html">FactoryInterface</a></li>
+                                                                                                    <li class="class"><a href="../classes/oat.taoSearch.model.factory.FactoryAbstract.html">FactoryAbstract</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.factory.QueryBuilderFactory.html">QueryBuilderFactory</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.factory.QueryFactory.html">QueryFactory</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.factory.QueryParamFactory.html">QueryParamFactory</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-119959356"></a>
+                                <a href="../namespaces/oat.taoSearch.model.search.html" style="margin-left: 30px; padding-left: 0">search</a>
+            </div>
+            <div id="namespace-119959356" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-961686972"></a>
+                                <a href="../namespaces/oat.taoSearch.model.search.command.html" style="margin-left: 30px; padding-left: 0">command</a>
+            </div>
+            <div id="namespace-961686972" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.command.OperatorConverterInterface.html">OperatorConverterInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1339364449"></a>
+                                <a href="../namespaces/oat.taoSearch.model.search.exception.html" style="margin-left: 30px; padding-left: 0">exception</a>
+            </div>
+            <div id="namespace-1339364449" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/oat.taoSearch.model.search.exception.QueryParsingException.html">QueryParsingException</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.search.exception.SearchGateWayExeption.html">SearchGateWayExeption</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1721968225"></a>
+                                <a href="../namespaces/oat.taoSearch.model.search.helper.html" style="margin-left: 30px; padding-left: 0">helper</a>
+            </div>
+            <div id="namespace-1721968225" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/oat.taoSearch.model.search.helper.SupportedOperatorHelper.html">SupportedOperatorHelper</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-281574089"></a>
+                                <a href="../namespaces/oat.taoSearch.model.search.Query.html" style="margin-left: 30px; padding-left: 0">Query</a>
+            </div>
+            <div id="namespace-281574089" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.Query.DriverSensitiveInterface.html">DriverSensitiveInterface</a></li>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.Query.EscaperInterface.html">EscaperInterface</a></li>
+                                                                                                    <li class="class"><a href="../classes/oat.taoSearch.model.search.Query.EscaperAbstract.html">EscaperAbstract</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-754114825"></a>
+                                <a href="../namespaces/oat.taoSearch.model.search.UsableTrait.html" style="margin-left: 30px; padding-left: 0">UsableTrait</a>
+            </div>
+            <div id="namespace-754114825" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                            <li class="trait"><a href="../classes/oat.taoSearch.model.search.UsableTrait.DriverSensitiveTrait.html">DriverSensitiveTrait</a></li>
+                                                    <li class="trait"><a href="../classes/oat.taoSearch.model.search.UsableTrait.LimitableTrait.html">LimitableTrait</a></li>
+                                                    <li class="trait"><a href="../classes/oat.taoSearch.model.search.UsableTrait.OptionsTrait.html">OptionsTrait</a></li>
+                                                    <li class="trait"><a href="../classes/oat.taoSearch.model.search.UsableTrait.SortableTrait.html">SortableTrait</a></li>
+                                                                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.LimitableInterface.html">LimitableInterface</a></li>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.OptionsInterface.html">OptionsInterface</a></li>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.QueryBuilderInterface.html">QueryBuilderInterface</a></li>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.QueryInterface.html">QueryInterface</a></li>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.QueryParamInterface.html">QueryParamInterface</a></li>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.QueryParserInterface.html">QueryParserInterface</a></li>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.ResultSetInterface.html">ResultSetInterface</a></li>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.SearchGateWayInterface.html">SearchGateWayInterface</a></li>
+                                                    <li class="interface"><a href="../classes/oat.taoSearch.model.search.SortableInterface.html">SortableInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-896845007"></a>
+                                <a href="../namespaces/oat.taoSearch.model.searchImp.html" style="margin-left: 30px; padding-left: 0">searchImp</a>
+            </div>
+            <div id="namespace-896845007" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-382807369"></a>
+                                <a href="../namespaces/oat.taoSearch.model.searchImp.Command.html" style="margin-left: 30px; padding-left: 0">Command</a>
+            </div>
+            <div id="namespace-382807369" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.Command.AbstractOperatorConverter.html">AbstractOperatorConverter</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.Command.OperatorAbstractfactory.html">OperatorAbstractfactory</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1858171688"></a>
+                                <a href="../namespaces/oat.taoSearch.model.searchImp.DbSql.html" style="margin-left: 30px; padding-left: 0">DbSql</a>
+            </div>
+            <div id="namespace-1858171688" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-173292982"></a>
+                                <a href="../namespaces/oat.taoSearch.model.searchImp.DbSql.Driver.html" style="margin-left: 30px; padding-left: 0">Driver</a>
+            </div>
+            <div id="namespace-173292982" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.Driver.MySQL.html">MySQL</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.Driver.PostgreSQL.html">PostgreSQL</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-978462298"></a>
+                                <a href="../namespaces/oat.taoSearch.model.searchImp.DbSql.TaoRdf.html" style="margin-left: 30px; padding-left: 0">TaoRdf</a>
+            </div>
+            <div id="namespace-978462298" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-399885322"></a>
+                                <a href="../namespaces/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.html" style="margin-left: 30px; padding-left: 0">Command</a>
+            </div>
+            <div id="namespace-399885322" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.AbstractRdfOperator.html">AbstractRdfOperator</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.Between.html">Between</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.Equal.html">Equal</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.GreaterThan.html">GreaterThan</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.GreaterThanOrEqual.html">GreaterThanOrEqual</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.In.html">In</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.LesserThan.html">LesserThan</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.LesserThanOrEqual.html">LesserThanOrEqual</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.Like.html">Like</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.LikeBegin.html">LikeBegin</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.Command.LikeContain.html">LikeContain</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.TaoRdf.QueryParser.html">QueryParser</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.DbSql.AbstractSqlQueryParser.html">AbstractSqlQueryParser</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.AbstractQueryParser.html">AbstractQueryParser</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html">AbstractSearchGateWay</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.Query.html">Query</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.QueryBuilder.html">QueryBuilder</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.QueryParam.html">QueryParam</a></li>
+                                                    <li class="class"><a href="../classes/oat.taoSearch.model.searchImp.TaoSearchGateWay.html">TaoSearchGateWay</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/oat.taoSearch.model.searchImp.html">\oat\taoSearch\model\searchImp</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\oat\taoSearch\model\searchImp</small>AbstractSearchGateWay</h1>
+                    <p><em>Abstract base for search gateway
+{@inheritdoc}</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/oat.taoSearch.model.search.UsableTrait.OptionsTrait.html#method_getOptions" class="">getOptions()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.search.UsableTrait.OptionsTrait.html#method_setOptions" class="">setOptions()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.search.UsableTrait.DriverSensitiveTrait.html#method_setDriverEscaper" class="">setDriverEscaper()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.search.UsableTrait.DriverSensitiveTrait.html#method_getDriverEscaper" class="">getDriverEscaper()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#method_init" class="">init()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#method_getDriverName" class="">getDriverName()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#method_setConnector" class="">setConnector()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#method_getConnector" class="">getConnector()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#method_setResultSetClassName" class="">setResultSetClassName()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#method_getParser" class="">getParser()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#method_getResultSetClassName" class="">getResultSetClassName()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#method_query" class="">query()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#method_setBuilderClassName" class="">setBuilderClassName()</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#method_getBuilderSetClassName" class="">getBuilderSetClassName()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/oat.taoSearch.model.search.UsableTrait.OptionsTrait.html#property_options" class="">$options</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.search.UsableTrait.DriverSensitiveTrait.html#property_driverEscaper" class="">$driverEscaper</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#property_parserList" class="">$parserList</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#property_driverList" class="">$driverList</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#property_builderClassName" class="">$builderClassName</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#property_resultSetClassName" class="">$resultSetClassName</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#property_driverName" class="">$driverName</a><br />
+                                                                    <a href="../classes/oat.taoSearch.model.searchImp.AbstractSearchGateWay.html#property_connector" class="">$connector</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                            <span class="label label-info">abstract</span>
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/searchImp.AbstractSearchGateWay.html"><div class="path-wrapper">searchImp/AbstractSearchGateWay.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\oat\taoSearch\model\searchImp\AbstractSearchGateWay</div>
+                            </dd>
+
+                                                                            <dt>Implements</dt>
+                                                        <dd><a href="../classes/oat.taoSearch.model.search.SearchGateWayInterface.html"><div class="namespace-wrapper">\oat\taoSearch\model\search\SearchGateWayInterface</div></a></dd>
+                        
+                                                                                    <dt>Uses traits</dt>
+                                                        <dd>
+                                                                    <div class="namespace-wrapper">\Zend\ServiceManager\ServiceLocatorAwareTrait</div>
+                                                            </dd>
+                                                                                <dd>
+                                <a href="../classes/oat.taoSearch.model.search.UsableTrait.OptionsTrait.html">                                    <div class="namespace-wrapper">\oat\taoSearch\model\search\UsableTrait\OptionsTrait</div>
+                                </a>                            </dd>
+                                                                                <dd>
+                                <a href="../classes/oat.taoSearch.model.search.UsableTrait.DriverSensitiveTrait.html">                                    <div class="namespace-wrapper">\oat\taoSearch\model\search\UsableTrait\DriverSensitiveTrait</div>
+                                </a>                            </dd>
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Christophe GARCIA <a href="mailto:christopheg@taotesting.com">christopheg@taotesting.com</a></p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_options" name="property_options" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$options</h3>
+                <pre class="signature">$options : array</pre>
+                <p><em>custom options</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/oat.taoSearch.model.search.UsableTrait.OptionsTrait.html"><div class="path-wrapper">\oat\taoSearch\model\search\UsableTrait\OptionsTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_driverEscaper" name="property_driverEscaper" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$driverEscaper</h3>
+                <pre class="signature">$driverEscaper : \oat\taoSearch\model\search\Query\EscaperInterface</pre>
+                <p><em>setted driver</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../classes/oat.taoSearch.model.search.Query.EscaperInterface.html">\oat\taoSearch\model\search\Query\EscaperInterface</a>
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/oat.taoSearch.model.search.UsableTrait.DriverSensitiveTrait.html"><div class="path-wrapper">\oat\taoSearch\model\search\UsableTrait\DriverSensitiveTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_parserList" name="property_parserList" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$parserList</h3>
+                <pre class="signature">$parserList : string</pre>
+                <p><em>parser service or className</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_driverList" name="property_driverList" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$driverList</h3>
+                <pre class="signature">$driverList : array</pre>
+                <p><em>driver escaper list</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_builderClassName" name="property_builderClassName" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$builderClassName</h3>
+                <pre class="signature">$builderClassName : string</pre>
+                <p><em>driver service name</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_resultSetClassName" name="property_resultSetClassName" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$resultSetClassName</h3>
+                <pre class="signature">$resultSetClassName : string</pre>
+                <p><em>resultSet service or className</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_driverName" name="property_driverName" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$driverName</h3>
+                <pre class="signature">$driverName : string</pre>
+                <p><em>global driver name</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_connector" name="property_connector" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$connector</h3>
+                <pre class="signature">$connector : mixed</pre>
+                <p><em>database connector</em></p>
+                
+
+                                <h4>Type</h4>
+                mixed
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getOptions" name="method_getOptions" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getOptions()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getOptions() : array</pre>
+                <p><em>return options array</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/oat.taoSearch.model.search.UsableTrait.OptionsTrait.html"><div class="path-wrapper">\oat\taoSearch\model\search\UsableTrait\OptionsTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setOptions" name="method_setOptions" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setOptions()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setOptions(array  <span class="argument">$options</span>) : $this</pre>
+                <p><em>set options</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$options </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/oat.taoSearch.model.search.UsableTrait.OptionsTrait.html"><div class="path-wrapper">\oat\taoSearch\model\search\UsableTrait\OptionsTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setDriverEscaper" name="method_setDriverEscaper" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setDriverEscaper()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setDriverEscaper(\oat\taoSearch\model\search\Query\EscaperInterface  <span class="argument">$escaper</span>) : $this</pre>
+                <p><em>set up database driver escaper</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/oat.taoSearch.model.search.Query.EscaperInterface.html">\oat\taoSearch\model\search\Query\EscaperInterface</a></td>
+                                <td>$escaper </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/oat.taoSearch.model.search.UsableTrait.DriverSensitiveTrait.html"><div class="path-wrapper">\oat\taoSearch\model\search\UsableTrait\DriverSensitiveTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDriverEscaper" name="method_getDriverEscaper" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDriverEscaper()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDriverEscaper() : \oat\taoSearch\model\search\Query\EscaperInterface</pre>
+                <p><em>return database driver  escaper</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/oat.taoSearch.model.search.Query.EscaperInterface.html">\oat\taoSearch\model\search\Query\EscaperInterface</a>
+                                            &mdash; <p>$escaper</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/oat.taoSearch.model.search.UsableTrait.DriverSensitiveTrait.html"><div class="path-wrapper">\oat\taoSearch\model\search\UsableTrait\DriverSensitiveTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_init" name="method_init" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">init()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">init() : $this</pre>
+                <p><em>init the gateway</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDriverName" name="method_getDriverName" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDriverName()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDriverName() : string</pre>
+                <p><em>return configuration driver name</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setConnector" name="method_setConnector" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setConnector()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setConnector(mixed  <span class="argument">$connector</span>) : $this</pre>
+                <p><em>create connector</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$connector </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getConnector" name="method_getConnector" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getConnector()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getConnector() : mixed</pre>
+                <p><em>return database connector</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setResultSetClassName" name="method_setResultSetClassName" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setResultSetClassName()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setResultSetClassName(string  <span class="argument">$resultSetClassName</span>) : $this</pre>
+                <p><em>change result set class name or service name</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$resultSetClassName </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getParser" name="method_getParser" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getParser()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getParser() : \oat\taoSearch\model\search\QueryParserInterface</pre>
+                <p><em>query parser factory</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/oat.taoSearch.model.search.QueryParserInterface.html">\oat\taoSearch\model\search\QueryParserInterface</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getResultSetClassName" name="method_getResultSetClassName" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getResultSetClassName()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getResultSetClassName() : string</pre>
+                <p><em>return resultSet class name or service name</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_query" name="method_query" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">query()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">query() : \oat\taoSearch\model\searchImp\QueryBuilder</pre>
+                <p><em>query builder factory</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/oat.taoSearch.model.searchImp.QueryBuilder.html">\oat\taoSearch\model\searchImp\QueryBuilder</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setBuilderClassName" name="method_setBuilderClassName" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setBuilderClassName()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setBuilderClassName(string  <span class="argument">$builderSetClassName</span>) : $this</pre>
+                <p><em>change query builder class name or service name</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$builderSetClassName </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getBuilderSetClassName" name="method_getBuilderSetClassName" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getBuilderSetClassName()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getBuilderSetClassName() : string</pre>
+                <p><em>return query builderclass name or service name</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">AbstractSearchGateWay.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/searchImp/AbstractSearchGateWay.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/oat.html">\oat</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on July 13th, 2016 at 17:07.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

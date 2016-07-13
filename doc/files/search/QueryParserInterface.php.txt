@@ -1,14 +1,29 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: chris
- * Date: 24/06/16
- * Time: 09:37
+/**  
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *               
+ * 
  */
 
 namespace oat\taoSearch\model\search;
 
-use oat\taoSearch\model\search\command\OperatorConverterInterface;
+use oat\taoSearch\model\search\Query\DriverSensitiveInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+
 /**
  * Interface QueryParserInterface
  *
@@ -17,9 +32,23 @@ use oat\taoSearch\model\search\command\OperatorConverterInterface;
  *
  * @package oat\taoSearch\model\search
  */
-interface QueryParserInterface {
+interface QueryParserInterface extends DriverSensitiveInterface, OptionsInterface, ServiceLocatorAwareInterface {
 
+     /**
+     * create query base
+     * @param array $options
+     * @return $this
+     */
+    public function prefixQuery();
+    
     /**
+     * set or unset pretty print
+     * @param boolean $pretty
+     * @return $this
+     */
+    public function pretty($pretty);
+
+        /**
      * transform QueryBuilderInterface to an exploitable criteria list
      *
      * @param QueryBuilderInterface $criteriaList
@@ -35,24 +64,5 @@ interface QueryParserInterface {
      * @return mixed
      */
     public function parse();
-    
-    /**
-     * set up query result cache storage
-     * @param QueryParserCacheInterface $cache
-     * @return $this
-     */
-    public function setCacheStorage(QueryParserCacheInterface $cache);
-    
-    /**
-     * enable cache for query transaltion result
-     * @return $this
-     */
-    public function disableCache();
-    
-    /**
-     * disable cache for query transaltion result
-     * @return $this
-     */
-    public function enableCache();
 
 }

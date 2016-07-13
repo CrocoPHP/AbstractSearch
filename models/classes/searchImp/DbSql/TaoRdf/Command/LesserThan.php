@@ -22,13 +22,16 @@
 namespace oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command;
 
 /**
- * Description of Equal
+ * create search criterium with for < operator
  *
- * @author christophe
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 class LesserThan extends AbstractRdfOperator
 {
-
+    /**
+     * operator
+     * @var string
+     */
     protected $operator = '<';
     
 }

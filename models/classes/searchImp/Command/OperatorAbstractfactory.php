@@ -31,13 +31,23 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class OperatorAbstractfactory implements AbstractFactoryInterface {
     
     /**
-     * @inheritDoc
+     * create new oprator
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param type $name
+     * @param type $requestedName
+     * @return object
      */
     public function createServiceWithName( ServiceLocatorInterface $serviceLocator, $name, $requestedName) {
 
-        return new $requestedName($tableGateway);
+        return new $requestedName();
     }
-
+    /**
+     * verify if class name is an existing operator
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param type $name
+     * @param type $requestedName
+     * @return boolean
+     */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName) {
         $interface = 'oat\taoSearch\model\search\command\OperatorConverterInterface';
         return (class_exists($requestedName) && in_array($interface , class_implements($requestedName)));

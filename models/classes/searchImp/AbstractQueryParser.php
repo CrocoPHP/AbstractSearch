@@ -31,6 +31,8 @@ use \oat\taoSearch\model\search\UsableTrait\DriverSensitiveTrait;
 use oat\taoSearch\model\search\UsableTrait\OptionsTrait;
 use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
+ * Query parser are use to transform 
+ * QueryBuilder to an exploitable query ofr database driver
  * @author christophe GARCIA
  */
 abstract class AbstractQueryParser implements QueryParserInterface {
@@ -38,33 +40,59 @@ abstract class AbstractQueryParser implements QueryParserInterface {
     use DriverSensitiveTrait;
     use OptionsTrait;
     use ServiceLocatorAwareTrait;
-    
-    protected $cache = false;
-    
+    /**
+     * parsed query
+     * @var string
+     */
     protected $query;
     /**
+     * query builder to parse for query generation
      * @var QueryBuilderInterface 
      */
     protected $criteriaList;
-    
+    /**
+     * supported operator class as
+     * [name => classname ]
+     * @var array list of supported operators 
+     */
     protected $supportedOperators = [];
-    
+    /**
+     * next separator to add
+     * @var string 
+     */
     protected $nextSeparator;
-    
+    /**
+     * generated query prefix
+     * @var string
+     */
     protected $queryPrefix;
-    
+    /**
+     * nameSapce for operator class name
+     * @var string 
+     */
     protected $operatorNameSpace;
-    
+    /**
+     * pretty print char
+     * @var string
+     */
     protected $prettyChar = "\n";
-    
+    /**
+     * not pretty print char
+     * @var string
+     */
     protected $unPrettyChar = ' ';
-    
+    /**
+     * place between each operation
+     * @var string
+     */
     protected $operationSeparator = '';
     /**
-     * @inheritDoc
+     * change operation separator
+     * to pretty print or unpretty print
+     * @param boolean $pretty
+     * @return $this
      */
     public function pretty($pretty) {
-        $pretty = boolval($pretty);
         if($pretty) {
             $this->operationSeparator = $this->prettyChar ;
         } else {
@@ -72,12 +100,19 @@ abstract class AbstractQueryParser implements QueryParserInterface {
         }
         return $this;
     }
-
+    /**
+     * 
+     * @param QueryBuilderInterface $criteriaList
+     * @return $this
+     */
     public function setCriteriaList(QueryBuilderInterface $criteriaList) {
         $this->criteriaList = $criteriaList;
         return $this;
     }
-
+    /**
+     * generate query exploitable by driver
+     * @return string
+     */
     public function parse() {
         
         $this->query = $this->queryPrefix;
@@ -90,6 +125,11 @@ abstract class AbstractQueryParser implements QueryParserInterface {
         return $this->query;
     }
     
+    /**
+     * parse QueryInterface criteria
+     * @param QueryInterface $query
+     * @return $this
+     */
     protected function parseQuery(QueryInterface $query) {
         foreach ($query->getStoredQueryParams() as $operation) {
             $this->parseOperation($operation);
@@ -98,7 +138,9 @@ abstract class AbstractQueryParser implements QueryParserInterface {
     }
 
     /**
+     * parse QueryParamInterface criteria
      * @param QueryParamInterface $operation
+     * @return $this
      */
     protected function parseOperation(QueryParamInterface $operation) {
         
@@ -135,7 +177,12 @@ abstract class AbstractQueryParser implements QueryParserInterface {
 
 
     /**
-     * @inherit
+     * generate and add to query a condition 
+     * exploitable by database driver
+     * @param type $command
+     * @param array $conditionList
+     * @param type $separator
+     * @return string
      */
     protected function setConditions(&$command , array $conditionList , $separator = 'and') {
         foreach($conditionList as $condition) {
@@ -147,9 +194,14 @@ abstract class AbstractQueryParser implements QueryParserInterface {
         return $command;
     }
 
-        /**
-     * @return \oat\taoSearch\model\search\command\OperatorConverterInterface
-     */
+     /**
+      * operator command factory 
+      * 
+      * @param type $operator
+      * 
+      * @return \oat\taoSearch\model\search\command\OperatorConverterInterface
+      * @throws QueryParsingException
+      */
     protected function getOperator($operator) {
          /**
           * @todo change that for a factory
@@ -165,7 +217,9 @@ abstract class AbstractQueryParser implements QueryParserInterface {
     }
     
     /**
-     *  @param boolean $and
+     * change next separator to "and" or "or"
+     * @param boolean $and
+     * @return $this
      */
     protected function setNextSeparator($and) {
         if(!is_null($this->nextSeparator)) {
@@ -187,37 +241,49 @@ abstract class AbstractQueryParser implements QueryParserInterface {
     abstract protected function mergeCondition(&$command , $condition, $separator = null);
     
     /**
+     * generate the beginning of query
      * @param array $options
      * @return $this;
      */
     abstract public  function prefixQuery();
     
     /**
+     * prepare query to receive new condition
      * @return $this;
      */
     abstract protected  function prepareOperator();
     
     /**
+     * add new Condition
      * @param string $expression
      * @return $this;
      */
     abstract protected  function addOperator($expression);
     
-     /**
-      *  @param boolean $and
-      * @return $this
+    /**
+     * add new condition separator
+     * @param boolean $and
+     * @return $this
      */
     abstract protected function addSeparator($and);
     /**
      * parse limitable queries
+     * @param integer $limit
+     * @param integer|null $offset
+     * @return mixed
      */
     abstract protected function addLimit($limit, $offset = null);
     
     /**
      * parse sort criteria
+     * @param array $sortCriteria
+     * @return mixed
      */
-    abstract protected function addSort(array $sort);
-    
+    abstract protected function addSort(array $sortCriteria);
+    /**
+     * close query
+     * @return $this
+     */
     abstract protected function finishQuery();
     
 }

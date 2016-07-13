@@ -1,5 +1,4 @@
 <?php
-
 /**  
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,18 +24,21 @@ namespace oat\taoSearch\model\searchImp\DbSql\TaoRdf;
 use \oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser;
 use \oat\taoSearch\model\search\helper\SupportedOperatorHelper;
 /**
- * Description of QueryParser
- *
- * @author christophe
+ * Tao RDF Onthology parser
+ * {@inheritDoc}
+ * 
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 class QueryParser extends AbstractSqlQueryParser {
     /**
-     * @inherit
+     * namespace for operator converter class
+     * @var string 
      */
      protected $operatorNameSpace = '\\oat\\taoSearch\\model\\searchImp\\DbSql\\TaoRdf\\Command';
      /**
-     * @inherit
-     */
+      * suppoted operator class name
+      * @var array
+      */
      protected $supportedOperators = 
              [
                  SupportedOperatorHelper::EQUAL              => 'Equal',
@@ -51,6 +53,10 @@ class QueryParser extends AbstractSqlQueryParser {
                  SupportedOperatorHelper::BEGIN_BY           => 'LikeBegin',
              ];
     
+     /**
+      * create query begining
+      * @return $this
+      */
     public function prefixQuery()
     {
         $options = $this->getOptions();
@@ -74,7 +80,7 @@ class QueryParser extends AbstractSqlQueryParser {
     } 
     
     /**
-     * 
+     * query base
      * @param type $fields
      * @param type $languageEmpty
      * @param type $languageStrict
@@ -106,7 +112,7 @@ class QueryParser extends AbstractSqlQueryParser {
                     $this->operationSeparator . $languageStrict . ' (';
     }
 
-        /**
+     /**
      * return an SQL string with language filter condition
      * 
      * @param string $language
@@ -126,7 +132,9 @@ class QueryParser extends AbstractSqlQueryParser {
     }
      
     /**
-     * @inherit
+     * create sub query to add a new condition to search predicates values
+     * @param string $expression
+     * @return $this
      */
     public function addOperator($expression)
     {
@@ -143,7 +151,11 @@ class QueryParser extends AbstractSqlQueryParser {
        return $this;
     }
     /**
-     * @inherit
+     * merge multiple condition QueryParam
+     * @param string $command
+     * @param string $condition
+     * @param string $separator
+     * @return $this
      */
     protected function mergeCondition(&$command , $condition, $separator = null) {
         
@@ -152,7 +164,10 @@ class QueryParser extends AbstractSqlQueryParser {
         
         return $this;
     }
-    
+    /**
+     * class query
+     * @return $this
+     */
     protected function finishQuery() {
         
         $this->query .= ') ' . $this->addLimit($this->criteriaList->getLimit() , $this->criteriaList->getOffset()) .' ) ' . 

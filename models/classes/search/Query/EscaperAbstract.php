@@ -1,5 +1,4 @@
 <?php
-
 /**  
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,9 +20,13 @@
  */
 namespace oat\taoSearch\model\search\Query;
 /**
- * Description of EscaperAbstract
+ * Escapers are used to format query params
+ * they quote string and escape table name (for example)
+ * using the right chars
+ * 
+ * Abstract base for database driver escaper
  *
- * @author christophe
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 abstract class EscaperAbstract implements EscaperInterface
 {
@@ -55,42 +58,52 @@ abstract class EscaperAbstract implements EscaperInterface
 
 
     /**
-     * @inherit
+     * escape string with escapeStringChar
+     * @param string $stringValue
+     * @return string
      */
     public function quote($stringValue) {
         return $this->escapeStringChar . $stringValue . $this->escapeStringChar;
     }
     /**
-     * @inherit
+     * escape reserved table or field name with escapeReserved
+     * @param string $stringValue
+     * @return string
      */
     public function reserved($stringValue) {
         return $this->escapeReserved  . $stringValue . $this->escapeReserved ;
     }
     /**
-     * @inherit
+     * return all fields alias (* for MySQL)
+     * @return string
      */
     public function getAllFields() {
         return $this->allFieldsAlias;
     }
     /**
-     * @inherit
+     * return fields list separator
+     * @return string
      */
     public function getFieldsSeparator() {
         return $this->fieldsSeparator;
     }
     /**
-     * @inherit
+     * return escapeStringChar
+     * @return string
      */
     public function getQuoteChar() {
         return $this->escapeStringChar;
     }
     /**
-     * @inherit
+     * return escapeReserved
+     * @return string
      */
     public function getReservedQuote() {
         return $this->escapeReserved;
     }
-
+    /**
+     * return quoted empty string 
+     */
     public function getEmpty() {
         return $this->quote($this->empty);
     }

@@ -22,9 +22,9 @@
 namespace oat\taoSearch\model\search\UsableTrait;
 
 /**
- * Description of LimitableTrait
+ * use with LimitableInterface
  *
- * @author christophe
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 trait LimitableTrait {
     /**
@@ -39,21 +39,29 @@ trait LimitableTrait {
     protected $offset;
     
     /**
+     * return offest
      * @see \oat\taoSearch\model\search\LimitableInterface::getOffset
+     * @return integer
      */
     public function getOffset() {
         return $this->offset;
     }
     
     /**
+     * return limit 
      * @see \oat\taoSearch\model\search\LimitableInterface::getLimit
+     * @return integer
      */
     public function getLimit() {
         return $this->limit;
     }
     
     /**
+     * set limit and offset
      * @see \oat\taoSearch\model\search\LimitableInterface::setOffset
+     * @param integer $limit
+     * @param integer $offset
+     * @return $this
      */
     public function setOffset($limit, $offset = null) {
         $this->limit = $limit;

@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; under version 2
@@ -25,8 +24,8 @@ use oat\taoSearch\model\search\UsableTrait\DriverSensitiveTrait;
 use oat\taoSearch\model\search\UsableTrait\OptionsTrait;
 use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
- * AbstractSearchGateWay
- *
+ * Abstract base for search gateway
+ * {@inheritdoc}
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 abstract class AbstractSearchGateWay implements SearchGateWayInterface
@@ -42,11 +41,17 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     protected $parserList = [
         'taoRdf' => 'search.tao.parser'
     ];
-    
+    /**
+     * driver escaper list
+     * @var array 
+     */
     protected $driverList = [
         'taoRdf' => 'search.driver.mysql'
     ];
-    
+    /**
+     * driver service name
+     * @var string
+     */
     protected $builderClassName = 'search.query.builder';
 
 
@@ -67,7 +72,8 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     protected $connector;
     
     /**
-     * @inheritDoc
+     * init the gateway
+     * @return $this
      */
     public function init() {
         $options = $this->getServiceLocator()->get('search.options');
@@ -79,35 +85,40 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     }
     
     /**
-     * @inheritDoc
+     * return configuration driver name
+     * @return string
      */
     public function getDriverName() {
         return $this->driverName;
     }
 
     /**
-     * @inheritDoc
+     * create connector
+     * @param mixed $connector
+     * @return $this
      */
     public function setConnector($connector) {
         $this->connector = $connector;
         return $this;
     }
     /**
-     * @inheritDoc
+     * return database connector
      */
     public function getConnector() {
         return $this->connector;
     }
     
     /**
-     * @inheritDoc
+     * change result set class name or service name
+     * @param string $resultSetClassName
+     * @return $this
      */
     public function setResultSetClassName($resultSetClassName) {
         $this->resultSetClassName = $resultSetClassName;
         return $this;
     }
     /**
-     * @inheritDoc
+     * query parser factory
      * @return \oat\taoSearch\model\search\QueryParserInterface
      */
     public function getParser() {
@@ -117,14 +128,16 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     }
 
      /**
-     * @inherit
+     * return resultSet class name or service name
+     * @return string 
      */
     public function getResultSetClassName() {
         return $this->resultSetClassName;
     }
     
     /**
-     * @inherit
+     * query builder factory
+     * @return QueryBuilder
      */
     public function query() {
         $builder = $this->getServiceLocator()->get($this->builderClassName);
@@ -133,7 +146,9 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     }
     
     /**
-     * @inherit
+     * change query builder class name or service name
+     * @param string $builderSetClassName
+     * @return $this
      */
     public function setBuilderClassName($builderSetClassName) {
         $this->builderClassName = $builderSetClassName;
@@ -141,7 +156,8 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     }
     
     /**
-     * @inherit
+     * return query builderclass name or service name
+     * @return string
      */
     public function getBuilderSetClassName() {
         return $this->builderClassName;

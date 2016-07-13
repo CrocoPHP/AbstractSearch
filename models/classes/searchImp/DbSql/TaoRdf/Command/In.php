@@ -26,14 +26,21 @@ use oat\taoSearch\model\search\exception\QueryParsingException;
 use oat\taoSearch\model\search\QueryParamInterface;
 
 /**
- * Description of In
+ * create search criterium with for IN operator
  *
  * @author christophe
  */
 class In extends AbstractRdfOperator {
-    
+    /**
+     * operator
+     * @var string
+     */
     protected $operator = 'IN';
-
+    /**
+     * create condition  for object
+     * @param array $values
+     * @return string
+     */
     protected function setValuesList(array $values) {
         $parseValues =  [];
         foreach ($values as $value) {
@@ -41,7 +48,12 @@ class In extends AbstractRdfOperator {
         }
         return '(' . implode(' ' . $this->getDriverEscaper()->getFieldsSeparator() . ' ' ,  $parseValues) . ')';
     }
-    
+    /**
+     * {@inheritdoc}
+     * @param QueryParamInterface $query
+     * @return string
+     * @throws QueryParsingException
+     */
     public function convert(QueryParamInterface $query) {
         if(!is_array($query->getValue())) {
             throw new QueryParsingException('Only array value is only supported by IN operator');

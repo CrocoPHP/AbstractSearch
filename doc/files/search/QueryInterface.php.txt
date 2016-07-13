@@ -1,18 +1,37 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**  
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *               
+ * 
  */
 
 namespace oat\taoSearch\model\search;
-
+use \oat\taoSearch\model\factory\FactoryAbstract;
 /**
  * create query
  */
-interface QueryInterface {
+interface QueryInterface extends OptionsInterface {
     
+    /**
+     * reset stored query params
+     * @return $this
+     */
+    public function reset();
     /**
      * change default query param className
      * @param string $queryParamsClassName
@@ -25,7 +44,7 @@ interface QueryInterface {
      * @param callable $factory
      * @return $this
      */
-    public function setQueryParamFactory(callable $factory);
+    public function setQueryParamFactory(FactoryAbstract $factory);
     
      /**
      * create and store a new QueryParamInterface
@@ -36,42 +55,6 @@ interface QueryInterface {
      * @return QueryParamInterface
      */
     public function addOperation($name , $operator , $value , $andSeparator = true);
-
-    /**
-     * set query limit
-     *
-     * @param int $start
-     * @param int $offset
-     * @return $this
-     */
-    public function setOffset($start , $offset);
-
-    /**
-     * set up sort criteria
-     * as ['name' => 'desc' , 'age' => 'asc']
-     *
-     * @param array $sortCriteria
-     * @return $this
-     */
-    public function sort(array $sortCriteria);
-    
-    /**
-     * return sort criterias
-     * @return array
-     */
-    public function getSort();
-    
-    /**
-     * return start item
-     * @return int
-     */
-    public function getStart();
-    
-    /**
-     * return query offest
-     * @return int
-     */
-    public function getOffset();
     
     /**
      * return all query params object stored

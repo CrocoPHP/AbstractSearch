@@ -22,14 +22,21 @@ namespace oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command;
 
 use \oat\taoSearch\model\search\QueryParamInterface;
 /**
- * Description of LikeContain
+ * create a condition to search if object contain value
  *
  * @author christophe
  */
 class LikeContain extends AbstractRdfOperator {
-    
+    /**
+     * operator
+     * @var string
+     */
     protected $operator = 'LIKE';
-
+    /**
+     * {@inheritdoc}
+     * @param QueryParamInterface $query
+     * @return string
+     */
     public function convert(QueryParamInterface $query) {
         $value = $this->getDriverEscaper()->quote($this->getDriverEscaper()->escape('%' . $query->getValue() . '%'));
         return '' .$this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $value . '';

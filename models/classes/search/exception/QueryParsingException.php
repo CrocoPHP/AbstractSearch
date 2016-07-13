@@ -20,7 +20,9 @@
  */
 
 namespace oat\taoSearch\model\search\exception;
-
+/**
+ * thown when QueryParser encounter a problem
+ */
 class QueryParsingException extends \InvalidArgumentException
 {
 

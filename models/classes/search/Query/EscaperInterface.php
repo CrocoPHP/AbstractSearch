@@ -1,5 +1,4 @@
 <?php
-
 /**  
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,7 +20,11 @@
  */
 namespace oat\taoSearch\model\search\Query;
 /**
- * Description of EscaperInterface
+ * Escapers are used to format query params
+ * they quote string and escape table name (for example)
+ * using the right chars
+ * 
+ * INTERFACE base for database driver escaper
  *
  * @author christophe
  */

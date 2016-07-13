@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; under version 2
@@ -21,7 +20,7 @@
 namespace oat\taoSearch\model\search\UsableTrait;
 
 /**
- * Description of OptionsTrait
+ * use with OptionsInterface
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */

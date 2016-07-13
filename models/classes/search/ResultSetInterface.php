@@ -19,7 +19,9 @@
  * 
  */
 namespace oat\taoSearch\model\search;
-
+/**
+ * result iterator interface
+ */
 interface ResultSetInterface extends \Iterator, \Countable
 {
 

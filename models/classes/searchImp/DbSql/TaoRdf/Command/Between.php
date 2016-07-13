@@ -28,9 +28,16 @@ use \oat\taoSearch\model\search\exception\QueryParsingException;
  * @author christophe
  */
 class Between extends AbstractRdfOperator {
-    
+    /**
+     * operator
+     * @var string
+     */
     protected $operator = 'BETWEEN';
-    
+    /**
+     * create condition  for object
+     * @param array $values
+     * @return string
+     */
     protected function setValuesList(array $values) {
         $parseValues =  [];
         foreach ($values as $value) {
@@ -38,7 +45,12 @@ class Between extends AbstractRdfOperator {
         }
         return implode(' ' . $this->getDriverEscaper()->dbCommand('AND') . ' ' ,  $parseValues);
     }
-
+    /**
+     * {@inheritdoc}
+     * @param QueryParamInterface $query
+     * @return string
+     * @throws QueryParsingException
+     */
     public function convert(QueryParamInterface $query) {
         if(!is_array($query->getValue())) {
             throw new QueryParsingException('Only array value is only supported by BETWEEN');

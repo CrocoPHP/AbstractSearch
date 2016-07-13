@@ -1,5 +1,4 @@
 <?php
-
 /**  
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,27 +22,36 @@ namespace oat\taoSearch\model\searchImp\DbSql\Driver;
 use oat\taoSearch\model\search\Query\EscaperAbstract;
 
 /**
- * Description of MySQL
+ * {@inheritDoc}
+ * used for MySQL databases
  *
- * @author christophe
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 class MySQL extends EscaperAbstract
 {
     /**
     * use to quote string value
-    * @string
+    * @var string
     */
     protected $escapeStringChar = '"';
     /**
      * use to quote database system reserved name
-     * @string
+     * @var string
      */
     protected $escapeReserved   = '`';
-    
+    /**
+     * format Database instructions
+     * @param string $stringValue
+     * @return string
+     */
     public function dbCommand($stringValue) {
         return strtoupper($stringValue);
     }
-
+    /**
+     * escape string value
+     * @param string $stringValue
+     * @return string
+     */
     public function escape($stringValue) {
         return addcslashes($stringValue, '\'"');
     }

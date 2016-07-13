@@ -23,12 +23,15 @@
 namespace oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command;
 
 /**
- * Description of LikeContain
+ * create search criterium with for LIKE operator
  *
  * @author christophe
  */
 class Like extends AbstractRdfOperator {
-    
+    /**
+     * operator
+     * @var string
+     */
     protected $operator = 'LIKE';
 
     

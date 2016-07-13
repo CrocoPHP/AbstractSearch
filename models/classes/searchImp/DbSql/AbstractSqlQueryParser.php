@@ -23,9 +23,17 @@ namespace oat\taoSearch\model\searchImp\DbSql;
 
 use oat\taoSearch\model\search\exception\QueryParsingException;
 use \oat\taoSearch\model\searchImp\AbstractQueryParser;
-
+/**
+ * Abstract base for SQL Query Parser
+ * {@inheritDoc}
+ * @author Christophe GARCIA <christopheg@taotesting.com>
+ */
 abstract class AbstractSqlQueryParser extends AbstractQueryParser {
-
+    
+    /**
+     * create base query for SQL single table query
+     * @return $this
+     */
     public function prefixQuery() {
         
         $options = $this->getOptions();
@@ -56,7 +64,10 @@ abstract class AbstractSqlQueryParser extends AbstractQueryParser {
     }
 
     /**
-     * @inherit
+     * verify options requirements
+     * @param array $options
+     * @return boolean
+     * @throws QueryParsingException
      */
     protected function validateOptions(array $options) {
 
@@ -67,7 +78,8 @@ abstract class AbstractSqlQueryParser extends AbstractQueryParser {
     }
 
     /**
-     * @inherit
+     * call before operation concatenation
+     * @return $this
      */
     protected function prepareOperator() {
         $this->query .= $this->operationSeparator;
@@ -75,7 +87,9 @@ abstract class AbstractSqlQueryParser extends AbstractQueryParser {
     }
 
     /**
-     * @inherit
+     * add a new criterium to query
+     * @param string $expression
+     * @return $this
      */
     protected function addOperator($expression) {
         $this->query .= $expression;
@@ -83,7 +97,9 @@ abstract class AbstractSqlQueryParser extends AbstractQueryParser {
     }
 
     /**
-     * @inherit
+     * add operation separator
+     * @param boolean $and
+     * @return $this
      */
     protected function addSeparator($and) {
         $separator = $this->getDriverEscaper()->dbCommand('OR');
@@ -96,7 +112,10 @@ abstract class AbstractSqlQueryParser extends AbstractQueryParser {
     }
 
     /**
-     * @inherit
+     * create limit part for query
+     * @param integer $limit
+     * @param integer $offset
+     * @return string
      */
     protected function addLimit($limit, $offset = null) {
         $limitQuery = '';
@@ -112,7 +131,9 @@ abstract class AbstractSqlQueryParser extends AbstractQueryParser {
     }
 
     /**
-     * @inherit
+     * parse sort criteria
+     * @param array $sortCriteria
+     * @return string
      */
     protected function addSort(array $sortCriteria) {
         $sort = '';
@@ -138,7 +159,10 @@ abstract class AbstractSqlQueryParser extends AbstractQueryParser {
 
         return $sort;
     }
-
+    /**
+     * finish an close query
+     * @return $this
+     */
     protected function finishQuery() {
         $this->query .= $this->addSort($this->criteriaList->getSort()) . ' ' . $this->addLimit($this->criteriaList->getLimit(), $this->criteriaList->getOffset())  . $this->operationSeparator;
         return $this;

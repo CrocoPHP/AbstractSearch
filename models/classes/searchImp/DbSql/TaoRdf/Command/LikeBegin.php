@@ -26,13 +26,20 @@ use \oat\taoSearch\model\search\QueryParamInterface;
 /**
  * Description of LikeContain
  *
- * @author christophe
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 class LikeBegin extends AbstractRdfOperator {
-    
+    /**
+     * operator
+     * @var string
+     */
     protected $operator = 'LIKE';
 
-
+    /**
+     * {@inheritdoc}
+     * @param QueryParamInterface $query
+     * @return string
+     */
     public function convert(QueryParamInterface $query) {
         $value = $query->getValue() . '%';
         $value = $this->getDriverEscaper()->escape($value);

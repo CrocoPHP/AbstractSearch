@@ -24,20 +24,22 @@ namespace oat\taoSearch\model\search\UsableTrait;
 use oat\taoSearch\model\search\Query\EscaperInterface;
 
 /**
- * Description of DriverSensibleTrait
+ * trait to use for classes implements DriverSensitive interface
  *
- * @author christophe
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 trait DriverSensitiveTrait {
    
     /**
-     * 
+     * setted driver
      * @var \oat\taoSearch\model\search\Query\EscaperInterface 
      */
     protected $driverEscaper;
     
     /**
-     * @inherit
+     * set up database driver escaper
+     * @param \oat\taoSearch\model\search\Query\EscaperInterface  $escaper 
+     * @return $this
      */
     public function setDriverEscaper(EscaperInterface $escaper) {
         $this->driverEscaper = $escaper;
@@ -45,7 +47,7 @@ trait DriverSensitiveTrait {
     }
     
     /**
-     * return escaper
+     * return database driver  escaper
      * @return \oat\taoSearch\model\search\Query\EscaperInterface $escaper
      */
     public function getDriverEscaper() {
