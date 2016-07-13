@@ -68,7 +68,7 @@ class QueryBuilder implements QueryBuilderInterface, ServiceLocatorAwareInterfac
     public function newQuery() {
         $factory = $this->factory;
         $factory->setServiceLocator($this->serviceLocator);
-        $query = $factory->get($this->queryClassName)->setServiceLocator($this->serviceLocator);
+        $query = $factory->get($this->queryClassName);
         $this->storedQueries[] = $query;
         return $query;
     }

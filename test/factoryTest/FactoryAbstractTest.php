@@ -47,15 +47,11 @@ class FactoryAbstractTest extends \oat\taoSearch\test\UnitTestHelper
             $this->setExpectedException('\InvalidArgumentException');
         } 
         
-        $valid = new \ReflectionProperty($this->instance,'validInterface');
-        $valid->setAccessible(true);
-        $valid->setValue($this->instance, 'oat\\taoSearch\\model\\search\\QueryParamInterface');
-        $reflexion = new \ReflectionMethod($this->instance,'isValidClass');
-        $reflexion->setAccessible(true);
+        $this->setInaccessibleProperty($this->instance, 'validInterface' , 'oat\\taoSearch\\model\\search\\QueryParamInterface');
         
         $class = new $class();
         
-        $this->assertSame($return, $reflexion->invokeArgs($this->instance , [$class]));
+        $this->assertSame($return, $this->callInaccessibleMethod('isValidClass' , [$class]));
         
     }
     

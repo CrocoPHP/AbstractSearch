@@ -30,24 +30,29 @@ class QueryBuilderFactoryTest extends \oat\taoSearch\test\UnitTestHelper
             'toto', 
             false
         ];
+        
+        $serviceManager =  $this->getMock('\\Zend\\ServiceManager\\ServiceManager');
+        
         $testClassName  = '\\oat\\taoSearch\\model\\search\\QueryBuilderInterface';
-        $mockTest       = $this->getMock('\\oat\\taoSearch\\model\\searchImp\\QueryBuilder' , ['setOptions']);
+        $mockTest       = $this->getMock('\\oat\\taoSearch\\model\\searchImp\\QueryBuilder' , ['setOptions' , 'setServiceLocator']);
         
         $mockTest->expects($this->once())
                 ->method('setOptions')
                 ->with($fixtureOptions)
                 ->willReturn($mockTest);
+        $mockTest->expects($this->once())
+                ->method('setServiceLocator')
+                ->with($serviceManager)
+                ->willReturn($mockTest);
         
-        
-        $serviceManager =  $this->getMock('\\Zend\\ServiceManager\\ServiceManager');
         
         $serviceManager->expects($this->once())
                 ->method('get')
                 ->with($testClassName)
                 ->willReturn($mockTest);
         
-        $this->instance->expects($this->once())->method('isValidClass')->with($testClassName)->willReturn(true);
-        $this->instance->expects($this->once())->method('getServiceLocator')->willReturn($serviceManager);
+        $this->instance->expects($this->once())->method('isValidClass')->with($mockTest)->willReturn(true);
+        $this->instance->expects($this->exactly(2))->method('getServiceLocator')->willReturn($serviceManager);
         $this->assertEquals($mockTest , $this->instance->get($testClassName , $fixtureOptions));
     }
     

@@ -94,17 +94,23 @@ class QueryTest extends UnitTestHelper {
         
         $fixtureQueryClass = 'stdClass';
         
+        $ServiceManager = $this->prophesize('\Zend\ServiceManager\ServiceManager');
+        $mockServiceManager = $ServiceManager->reveal();
+        
+        
         $mockQuery = $this->prophesize('\oat\taoSearch\model\searchImp\QueryParam');
         $mockQuery = $mockQuery->reveal();
         
         $mockFactoryProphecy = $this->prophesize('\oat\taoSearch\model\factory\FactoryInterface');
+        $mockFactoryProphecy->setServiceLocator($mockServiceManager)->willReturn($mockFactoryProphecy)->shouldBeCalledTimes(1);
         $mockFactoryProphecy->get($fixtureQueryClass , [$fixtureName, $fixtureOperator, $fixtureValue, $fixtureSeparator])->willReturn($mockQuery)->shouldBeCalledTimes(1);
         $mockFactory = $mockFactoryProphecy->reveal();
         
         $this->setInaccessibleProperty($this->instance , 'queryParamClassName', $fixtureQueryClass);
         $this->setInaccessibleProperty($this->instance , 'factory', $mockFactory);
+        $this->setInaccessibleProperty($this->instance , 'serviceLocator', $mockServiceManager);
         
-         $this->assertSame($mockQuery , $this->instance->addOperation($fixtureName, $fixtureOperator, $fixtureValue, $fixtureSeparator));
+        $this->assertSame($mockQuery , $this->instance->addOperation($fixtureName, $fixtureOperator, $fixtureValue, $fixtureSeparator));
         $this->assertTrue(in_array($mockQuery , $this->getInaccessibleProperty($this->instance , 'storedQueryParams')));
         
     }

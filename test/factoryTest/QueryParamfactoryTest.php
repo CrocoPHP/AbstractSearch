@@ -40,7 +40,9 @@ class QueryParamfactoryTest extends \oat\taoSearch\test\UnitTestHelper {
         
         $testClassName  = '\\oat\\taoSearch\\model\\searchImp\\QueryParam';
         
-        $mockTest       = $this->getMock('\\stdClass' , ['setName' , 'setOperator' , 'setValue' , 'setAndSeparator']);
+        $serviceManager =  $this->getMock('\\Zend\\ServiceManager\\ServiceManager');
+        
+        $mockTest       = $this->getMock('\\stdClass' , ['setName' , 'setOperator' , 'setValue' , 'setAndSeparator' , 'setServiceLocator']);
         
         $mockTest->expects($this->once())
                 ->method('setName')
@@ -58,19 +60,19 @@ class QueryParamfactoryTest extends \oat\taoSearch\test\UnitTestHelper {
                 ->method('setAndSeparator')
                 ->with($fixtureOptions[3])
                 ->willReturn($mockTest);
-        
-        
-        
-        $serviceManager =  $this->getMock('\\Zend\\ServiceManager\\ServiceManager');
-        
+        $mockTest->expects($this->once())
+                ->method('setServiceLocator')
+                ->with($serviceManager)
+                ->willReturn($mockTest);
+
         $serviceManager->expects($this->once())
                 ->method('get')
                 ->with($testClassName)
                 ->willReturn($mockTest);
         
-        $this->instance->expects($this->once())->method('getServiceLocator')->willReturn($serviceManager);
+        $this->instance->expects($this->exactly(2))->method('getServiceLocator')->willReturn($serviceManager);
         
-        $this->instance->expects($this->once())->method('isValidClass')->with($testClassName)->willReturn(true);
+        $this->instance->expects($this->once())->method('isValidClass')->with($mockTest)->willReturn(true);
         $this->assertEquals($mockTest , $this->instance->get($testClassName , $fixtureOptions));
     }
     

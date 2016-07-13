@@ -65,7 +65,6 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
         $param = $this->factory
                 ->setServiceLocator($this->serviceLocator)
                 ->get($this->queryParamClassName , [$name, $operator, $value, $andSeparator]);
-        $param->setServiceLocator($this->serviceLocator);
         
         $this->storedQueryParams[] = $param;
         return $param;

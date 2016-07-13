@@ -73,16 +73,22 @@ class QueryBuilderTest extends \oat\taoSearch\test\UnitTestHelper {
     public function testNewQuery() {
         
         $fixtureQueryClass = 'stdClass';
-        
+
+        $ServiceManager = $this->prophesize('\Zend\ServiceManager\ServiceManager');
+        $mockServiceManager = $ServiceManager->reveal();
+ 
         $mockQuery = $this->prophesize('\oat\taoSearch\model\searchImp\Query');
         $mockQuery = $mockQuery->reveal();
         
         $mockFactoryProphecy = $this->prophesize('\oat\taoSearch\model\factory\FactoryInterface');
+        $mockFactoryProphecy->setServiceLocator($mockServiceManager)->willReturn($mockFactoryProphecy)->shouldBeCalledTimes(1);
         $mockFactoryProphecy->get($fixtureQueryClass)->willReturn($mockQuery)->shouldBeCalledTimes(1);
+        
         $mockFactory = $mockFactoryProphecy->reveal();
         
         $this->setInaccessibleProperty($this->instance , 'queryClassName', $fixtureQueryClass);
         $this->setInaccessibleProperty($this->instance , 'factory', $mockFactory);
+        $this->setInaccessibleProperty($this->instance , 'serviceLocator', $mockServiceManager);
         
         $this->assertSame($mockQuery , $this->instance->newQuery());
         $this->assertTrue(in_array($mockQuery , $this->getInaccessibleProperty($this->instance , 'storedQueries')));

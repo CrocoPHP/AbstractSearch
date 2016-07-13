@@ -2,48 +2,6 @@
 $rootDir = dirname(__FILE__); 
 require $rootDir . "/vendor/autoload.php";
 
-/*
-
-$parserOptions = 
-        [
-            'table'    => 'statements',
-            'language' => 'en-US',
-        ];
-
-$Builder = new \oat\taoSearch\model\searchImp\QueryBuilder();
-
-$Query = $Builder->newQuery();
-$Query->addOperation('http://www.tao.lu/Ontologies/TAOItem.rdf#ItemModel' , oat\taoSearch\model\search\helper\SupportedOperatorHelper::EQUAL ,  'http://www.tao.lu/Ontologies/TAOItem.rdf#QTI');
-$Query->addOperation('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', oat\taoSearch\model\search\helper\SupportedOperatorHelper::EQUAL, 'http://www.tao.lu/Ontologies/TAOItem.rdf#Item');
-
-$Builder->setOffset(10)->sort(['modelID' => 'desc']);
-
-$Driver = new \oat\taoSearch\model\searchImp\DbSql\Driver\MySQL();
-
-$Parser = new \oat\taoSearch\model\searchImp\DbSql\TaoRdf\QueryParser();
-
-echo $Parser->setDriverEscaper($Driver)->setOptions($parserOptions)->prefixQuery()->setCriteriaList($Builder)->parse();
-
-
-
-$Builder = new \oat\taoSearch\model\searchImp\QueryBuilder();
-echo "\n\n";
-$Query = $Builder->newQuery();
-$Query->addOperation('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', oat\taoSearch\model\search\helper\SupportedOperatorHelper::EQUAL, 'http://www.tao.lu/Ontologies/TAOItem.rdf#Delivery');
-
-$Builder->setOffset(10)->sort(['modelId' => 'desc']);
-$Parser = new \oat\taoSearch\model\searchImp\DbSql\TaoRdf\QueryParser();
-
-echo $Parser->setDriverEscaper($Driver)->setOptions($parserOptions)->prefixQuery()->setCriteriaList($Builder)->parse();
-
-$Builder = new \oat\taoSearch\model\searchImp\QueryBuilder();
-echo "\n\n";
-$Query = $Builder->newQuery();
-$Query->addOperation('http://www.w3.org/2000/01/rdf-schema#label', oat\taoSearch\model\search\helper\SupportedOperatorHelper::CONTAIN, 'Delivery');
-$Parser = new \oat\taoSearch\model\searchImp\DbSql\TaoRdf\QueryParser();
-
-echo $Parser->setDriverEscaper($Driver)->setOptions($parserOptions)->prefixQuery()->setCriteriaList($Builder)->parse();
-*/
 
 $ServicConfig = new \Zend\ServiceManager\Config(
             [
@@ -91,10 +49,10 @@ $GateWay->setServiceLocator($ServiceLocator)->init();
 
 $Builder = $GateWay->query();
 $Query = $Builder->newQuery();
-$Query->addOperation('http://www.tao.lu/Ontologies/TAOItem.rdf#ItemModel' , oat\taoSearch\model\search\helper\SupportedOperatorHelper::EQUAL ,  'http://www.tao.lu/Ontologies/TAOItem.rdf#QTI');
+
 $Query->addOperation('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', oat\taoSearch\model\search\helper\SupportedOperatorHelper::EQUAL, 'http://www.tao.lu/Ontologies/TAOItem.rdf#Item');
+$Query->addOperation('http://www.tao.lu/Ontologies/TAOItem.rdf#ItemModel' , oat\taoSearch\model\search\helper\SupportedOperatorHelper::EQUAL ,  'http://www.tao.lu/Ontologies/TAOItem.rdf#QTI');
+$Builder->setOffset(10)->sort(['modelId' => 'desc']);
 
-$Builder->setOffset(10)->sort(['modelID' => 'desc']);
-
-$sql = $GateWay->getParser()->pretty(true)->setCriteriaList($Builder)->parse();
+$sql = $GateWay->getParser()->setCriteriaList($Builder)->parse();
 $GateWay->search($sql);

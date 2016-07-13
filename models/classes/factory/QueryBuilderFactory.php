@@ -37,8 +37,8 @@ class QueryBuilderFactory extends FactoryAbstract
      */
     public function get($className , array $options = array())  {
       
-        if($this->isValidClass($className)) {
-            $Query = $this->getServiceLocator()->get($className);
+        $Query = $this->getServiceLocator()->get($className);
+        if($this->isValidClass($Query)) {
             $Query->setServiceLocator($this->getServiceLocator())->setOptions($options);
             return $Query;
         }

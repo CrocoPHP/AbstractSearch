@@ -41,9 +41,10 @@ class QueryParamFactory extends FactoryAbstract {
         if($this->isValidClass($Param)) {
             
             $Param->setName($options[0])
-            ->setOperator($options[1])
-            ->setValue($options[2])
-            ->setAndSeparator($options[3]);
+                ->setOperator($options[1])
+                ->setValue($options[2])
+                ->setAndSeparator($options[3])
+                ->setServiceLocator($this->getServiceLocator());
             
             return $Param;
         }

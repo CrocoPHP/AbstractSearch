@@ -20,7 +20,7 @@ class QueryFactoryTest extends \oat\taoSearch\test\UnitTestHelper
     
     public function setup() {
         
-    $this->instance = $this->getMock('\\oat\\taoSearch\\model\\factory\\QueryFactory', ['isValidClass']);
+    $this->instance = $this->getMock('\\oat\\taoSearch\\model\\factory\\QueryFactory', ['isValidClass' , 'getServiceLocator']);
         
     }
     
@@ -32,27 +32,30 @@ class QueryFactoryTest extends \oat\taoSearch\test\UnitTestHelper
             'toto', 
             false
         ];
+         
+        $serviceManager =  $this->getMock('\\Zend\\ServiceManager\\ServiceManager');
+        
         $testClassName  = '\\oat\\taoSearch\\model\\search\\QueryInterface';
-        $mockTest       = $this->getMock('\\stdClass' , ['setOptions']);
+        $mockTest       = $this->getMock('\\stdClass' , ['setOptions' , 'setServiceLocator']);
+        
+        $mockTest->expects($this->once())
+                ->method('setServiceLocator')
+                ->with($serviceManager)
+                ->willReturn($mockTest);
         
         $mockTest->expects($this->once())
                 ->method('setOptions')
                 ->with($fixtureOptions)
                 ->willReturn($mockTest);
         
-        
-        $serviceManager =  $this->getMock('\\Zend\\ServiceManager\\ServiceManager');
-        
         $serviceManager->expects($this->once())
                 ->method('get')
                 ->with($testClassName)
                 ->willReturn($mockTest);
         
-        $valid = new \ReflectionProperty($this->instance , 'serviceLocator');
-        $valid->setAccessible(true);
-        $valid->setValue($this->instance, $serviceManager);
-        
-        $this->instance->expects($this->once())->method('isValidClass')->with($testClassName)->willReturn(true);
+        $this->setInaccessibleProperty($this->instance, 'serviceLocator', $serviceManager);
+        $this->instance->expects($this->exactly(2))->method('getServiceLocator')->willReturn($serviceManager);
+        $this->instance->expects($this->once())->method('isValidClass')->with($mockTest)->willReturn(true);
         $this->assertEquals($mockTest , $this->instance->get($testClassName , $fixtureOptions));
     }
     
