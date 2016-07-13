@@ -1,35 +1,82 @@
 <?php
-$includePath = realpath('./');
-set_include_path($includePath);
+$rootDir = dirname(__FILE__); 
+require $rootDir . "/vendor/autoload.php";
 
-function __autoload($name) {
-    $name = str_replace('\\', '/', $name);
-    $name = str_replace('oat/taoSearch/', './', $name);
-    $name .= '.php';
-    require $name;
-}
+/*
 
 $parserOptions = 
         [
-            'table' => 'statements',
+            'table'    => 'statements',
+            'language' => 'en-US',
         ];
 
-$Builder = new oat\taoSearch\model\searchImp\QueryBuilder();
-$Builder->setQueryClassName('oat\taoSearch\model\searchImp\Query');
-$Builder->setQueryFactory(function ($className) {
-    return new $className();
-    
-});
+$Builder = new \oat\taoSearch\model\searchImp\QueryBuilder();
 
 $Query = $Builder->newQuery();
-$Query->addOperation('http://www.w3.org/2000/01/rdf-schema#label', oat\taoSearch\model\search\helper\SupportedOperatorHelper::BEGIN_BY, 'test' , true)
-        ->addAnd('1', oat\taoSearch\model\search\helper\SupportedOperatorHelper::CONTAIN)
-        ->addOr('test' , oat\taoSearch\model\search\helper\SupportedOperatorHelper::CONTAIN);
+$Query->addOperation('http://www.tao.lu/Ontologies/TAOItem.rdf#ItemModel' , oat\taoSearch\model\search\helper\SupportedOperatorHelper::EQUAL ,  'http://www.tao.lu/Ontologies/TAOItem.rdf#QTI');
 $Query->addOperation('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', oat\taoSearch\model\search\helper\SupportedOperatorHelper::EQUAL, 'http://www.tao.lu/Ontologies/TAOItem.rdf#Item');
 
-$Builder->setOffset(10 , 10)->sort(['modelID' => 'desc']);
+$Builder->setOffset(10)->sort(['modelID' => 'desc']);
 
-$Parser = new oat\taoSearch\model\searchImp\DbSql\MySQL\TaoRdf\QueryParser();
+$Driver = new \oat\taoSearch\model\searchImp\DbSql\Driver\MySQL();
 
-echo $Parser->prefixQuery($parserOptions)->setCriteriaList($Builder)->parse();
+$Parser = new \oat\taoSearch\model\searchImp\DbSql\TaoRdf\QueryParser();
 
+echo $Parser->setDriverEscaper($Driver)->setOptions($parserOptions)->prefixQuery()->setCriteriaList($Builder)->parse();
+
+
+
+$Builder = new \oat\taoSearch\model\searchImp\QueryBuilder();
+echo "\n\n";
+$Query = $Builder->newQuery();
+$Query->addOperation('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', oat\taoSearch\model\search\helper\SupportedOperatorHelper::EQUAL, 'http://www.tao.lu/Ontologies/TAOItem.rdf#Delivery');
+
+$Builder->setOffset(10)->sort(['modelId' => 'desc']);
+$Parser = new \oat\taoSearch\model\searchImp\DbSql\TaoRdf\QueryParser();
+
+echo $Parser->setDriverEscaper($Driver)->setOptions($parserOptions)->prefixQuery()->setCriteriaList($Builder)->parse();
+
+$Builder = new \oat\taoSearch\model\searchImp\QueryBuilder();
+echo "\n\n";
+$Query = $Builder->newQuery();
+$Query->addOperation('http://www.w3.org/2000/01/rdf-schema#label', oat\taoSearch\model\search\helper\SupportedOperatorHelper::CONTAIN, 'Delivery');
+$Parser = new \oat\taoSearch\model\searchImp\DbSql\TaoRdf\QueryParser();
+
+echo $Parser->setDriverEscaper($Driver)->setOptions($parserOptions)->prefixQuery()->setCriteriaList($Builder)->parse();
+*/
+
+$ServicConfig = new \Zend\ServiceManager\Config(
+            [
+                'shared'    => 
+                    [
+                        'search.query.query'      => false,
+                        'search.query.builder'    => false,
+                        'search.query.param'      => false,
+                        'search.tao.parser'       => false,
+                    ],
+                'invokables' => 
+                    [
+                        'search.query.query'      =>  '\\oat\\taoSearch\\model\\searchImp\\Query',
+                        'search.query.builder'    =>  '\\oat\\taoSearch\\model\\searchImp\\QueryBuilder',
+                        'search.query.param'      =>  '\\oat\\taoSearch\\model\\searchImp\\QueryParam',
+                        'search.driver.postgres'  =>  '\\oat\taoSearch\\model\\searchImp\\DbSql\\Driver\\PostgreSQL',
+                        'search.driver.mysql'     =>  '\\oat\taoSearch\\model\\searchImp\\DbSql\\Driver\\MySQL',
+                        'search.tao.parser'       =>  '\\oat\\taoSearch\\model\\searchImp\\DbSql\\TaoRdf\\QueryParser',
+                        'search.factory.query'    =>  '\\oat\\taoSearch\\model\\factory\\QueryFactory',
+                        'search.factory.builder'  =>  '\\oat\\taoSearch\\model\\factory\\QueryBuilderFactory',
+                        'search.factory.param'    =>  '\\oat\\taoSearch\\model\\factory\\QueryParamFactory',
+                    ],
+                'services' => 
+                    [
+                        'search.options' => 
+                            [
+                                'table'    => 'statements',
+                                'language' => 'en-US',
+                                'driver'   => 'taoRdf',
+                            ]
+                    ]
+
+            ]
+        );
+
+$ServiceLocator = new \Zend\ServiceManager\ServiceManager($ServicConfig);

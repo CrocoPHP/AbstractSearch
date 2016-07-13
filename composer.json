@@ -1,0 +1,23 @@
+{
+    "require" : {
+        "zendframework/zend-servicemanager" : "~2.5.0",
+        "oat-sa/generis" : "~2.24.0"
+    },
+    "require-dev" : 
+    {
+        "phpunit/phpunit": "~4.4@dev",
+        "sebastian/global-state": "~1.0@dev",
+        "mikey179/vfsStream": "1.4.0",
+	"oat-sa/tao-build" : "dev-develop"
+    },
+    "minimum-stability" : "dev",
+	"autoload" : {
+		"psr-4" : {
+			"oat\\taoSearch\\model\\" : "models/classes/",
+			"oat\\taoSearch\\helpers\\" : "helpers",
+			"oat\\taoSearch\\test\\" : "test",
+			"oat\\taoSearch\\scripts\\" : "scripts"
+		}
+	}
+    
+}

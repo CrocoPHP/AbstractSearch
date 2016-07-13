@@ -1,0 +1,167 @@
+<?php
+
+/**  
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; under version 2
+ * of the License (non-upgradable).
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
+ *               
+ * 
+ */
+
+namespace oat\taoSearch\model\searchImp\DbSql\TaoRdf;
+
+use \oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser;
+use \oat\taoSearch\model\search\helper\SupportedOperatorHelper;
+/**
+ * Description of QueryParser
+ *
+ * @author christophe
+ */
+class QueryParser extends AbstractSqlQueryParser {
+    /**
+     * @inherit
+     */
+     protected $operatorNameSpace = '\\oat\\taoSearch\\model\\searchImp\\DbSql\\TaoRdf\\Command';
+     /**
+     * @inherit
+     */
+     protected $supportedOperators = 
+             [
+                 SupportedOperatorHelper::EQUAL              => 'Equal',
+                 SupportedOperatorHelper::GREATER_THAN       => 'GreaterThan',
+                 SupportedOperatorHelper::LESSER_THAN        => 'LesserThan',
+                 SupportedOperatorHelper::GREATER_THAN_EQUAL => 'GreaterThanOrEqual',
+                 SupportedOperatorHelper::LESSER_THAN_EQUAL  => 'LesserThanOrEqual',
+                 SupportedOperatorHelper::CONTAIN            => 'LikeContain',
+                 SupportedOperatorHelper::MATCH              => 'Like',
+                 SupportedOperatorHelper::IN                 => 'In',
+                 SupportedOperatorHelper::BETWEEN            => 'Between',
+                 SupportedOperatorHelper::BEGIN_BY           => 'LikeBegin',
+             ];
+    
+    public function prefixQuery()
+    {
+        $options = $this->getOptions();
+        
+        if($this->validateOptions($options)) {
+            //default values
+            $languageStrict = '';
+            $languageEmpty  = '';
+            
+            if(array_key_exists('language' , $options)) {
+               $languageStrict = $this->setLanguageCondition($options['language']);
+               $languageEmpty  = $this->setLanguageCondition($options['language'] , true);
+            }
+            
+            $fields = $this->setFieldList($options);
+            
+            $this->queryPrefix = $this->initQuery($fields, $languageEmpty, $languageStrict);
+        }
+        return $this;
+
+    } 
+    
+    /**
+     * 
+     * @param type $fields
+     * @param type $languageEmpty
+     * @param type $languageStrict
+     * @return string
+     */
+    protected function initQuery($fields , $languageEmpty , $languageStrict) {
+        
+        $table = $this->getOptions()['table'];
+        
+        return $this->getDriverEscaper()->dbCommand('SELECT') . ' ' . $fields . ' ' . 
+                    $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
+                    $this->getDriverEscaper()->reserved($table) . ' ' .
+                    $this->getDriverEscaper()->dbCommand('WHERE') . 
+                    $this->operationSeparator . $languageEmpty . ' ' .
+                    $this->getDriverEscaper()->reserved('subject') . ' ' .
+                    $this->getDriverEscaper()->dbCommand('IN') . 
+                    $this->operationSeparator . '(' .
+                    $this->getDriverEscaper()->dbCommand('SELECT') .  ' ' .
+                    $this->getDriverEscaper()->reserved('subject') .  ' ' .
+                    $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
+                    $this->operationSeparator . '(' .
+                    $this->getDriverEscaper()->dbCommand('SELECT') . ' ' . 
+                    $this->getDriverEscaper()->dbCommand('DISTINCT') . 
+                    $this->operationSeparator .'(' .
+                    $this->getDriverEscaper()->reserved('subject') . ')' . ' ' . 
+                    $this->getDriverEscaper()->dbCommand('FROM') . ' ' . 
+                    $this->getDriverEscaper()->reserved($table) . ' ' .
+                    $this->getDriverEscaper()->dbCommand('WHERE') .  
+                    $this->operationSeparator . $languageStrict . ' (';
+    }
+
+        /**
+     * return an SQL string with language filter condition
+     * 
+     * @param string $language
+     * @param boolean $emptyAvailable
+     * @return string
+     */
+    public function setLanguageCondition($language , $emptyAvailable = false) {
+        $languageField = $this->getDriverEscaper()->reserved('l_language');
+        $languageValue      = $this->getDriverEscaper()->escape($language);
+        $sql = '('; 
+        $sql .= $languageField .' = ' . $this->getDriverEscaper()->quote($languageValue) . ''; 
+        if($emptyAvailable) {
+            $sql .= ' ' . $this->getDriverEscaper()->dbCommand('OR') . ' ' . $languageField . ' = ' . $this->getDriverEscaper()->getEmpty();
+        }
+        $sql .= ') ' . $this->getDriverEscaper()->dbCommand('AND') . $this->operationSeparator;
+        return $sql;
+    }
+     
+    /**
+     * @inherit
+     */
+    public function addOperator($expression)
+    {
+       $this->query .= '( ' . $this->getDriverEscaper()->reserved('subject') . ' ' . 
+               $this->getDriverEscaper()->dbCommand('IN') . 
+               $this->operationSeparator .'(' . 
+               $this->getDriverEscaper()->dbCommand('SELECT') . ' ' . 
+               $this->getDriverEscaper()->dbCommand('DISTINCT') . ' ' . 
+               $this->getDriverEscaper()->reserved('subject') . ' ' .
+               $this->getDriverEscaper()->dbCommand('FROM') .' ' . 
+               $this->getDriverEscaper()->reserved($this->options['table']) . ' ' .
+               $this->getDriverEscaper()->dbCommand('WHERE') . 
+               $this->operationSeparator . $expression . '))';
+       return $this;
+    }
+    /**
+     * @inherit
+     */
+    protected function mergeCondition(&$command , $condition, $separator = null) {
+        
+        $command .= (is_null($separator))? '' : ' ' . $this->getDriverEscaper()->dbCommand($separator);
+        $command .= ' ' . $condition . $this->operationSeparator;
+        
+        return $this;
+    }
+    
+    protected function finishQuery() {
+        
+        $this->query .= ') ' . $this->addLimit($this->criteriaList->getLimit() , $this->criteriaList->getOffset()) .' ) ' . 
+                $this->operationSeparator .
+                $this->getDriverEscaper()->dbCommand('AS') .
+                ' subQuery ) ' . $this->operationSeparator . 
+                $this->addSort($this->criteriaList->getSort());
+        
+        return $this;
+    }
+    
+}
