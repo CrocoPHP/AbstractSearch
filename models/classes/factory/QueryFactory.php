@@ -40,8 +40,8 @@ class QueryFactory extends FactoryAbstract {
     public function get($className , array $options = array())  {
         
         $Query = $this->getServiceLocator()->get($className);
-        if($this->isValidClass($className)) {
-            return $Query->setOptions($options);
+        if($this->isValidClass($Query)) {
+            return $Query->setServiceLocator($this->getServiceLocator())->setOptions($options);
         }
     }
     

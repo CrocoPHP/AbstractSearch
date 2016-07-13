@@ -37,9 +37,8 @@ class QueryParamFactory extends FactoryAbstract {
      * @throws \InvalidArgumentException
      */
     public function get($className,array $options = array()) {
-        
-        if($this->isValidClass($className)) {
-            $Param = $this->getServiceLocator()->get($className);
+        $Param = $this->getServiceLocator()->get($className);
+        if($this->isValidClass($Param)) {
             
             $Param->setName($options[0])
             ->setOperator($options[1])

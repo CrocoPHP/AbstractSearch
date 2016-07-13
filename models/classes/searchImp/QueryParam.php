@@ -22,8 +22,12 @@
 namespace oat\taoSearch\model\searchImp;
 
 use \oat\taoSearch\model\search\QueryParamInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
-class QueryParam implements QueryParamInterface {
+class QueryParam implements QueryParamInterface,ServiceLocatorAwareInterface {
+    
+    use ServiceLocatorAwareTrait;
     
     protected $name;
     

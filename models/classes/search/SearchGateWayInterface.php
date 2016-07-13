@@ -20,7 +20,11 @@
  */
 
 namespace oat\taoSearch\model\search;
+
+use oat\taoSearch\model\factory\FactoryInterface;
 use oat\taoSearch\model\search\exception\SearchGateWayExeption;
+use oat\taoSearch\model\search\Query\DriverSensitiveInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * Interface SearchGateWayInterface
@@ -29,21 +33,13 @@ use oat\taoSearch\model\search\exception\SearchGateWayExeption;
  *
  * @package oat\taoSearch\model\search
  */
-interface SearchGateWayInterface
+interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterface, ServiceLocatorAwareInterface
 {
     /**
-     * return connection options
-     * @return array
+     * intitialyse your gateway
      */
-    public function getOptions();
+    public function init();
 
-    /**
-     * set up connection option
-     * @param array $options
-     * @return $this
-     */
-    public function setOptions(array $options);
-    
     /**
      * set up database connector if needed
      * @param mixed connector
@@ -79,10 +75,10 @@ interface SearchGateWayInterface
     /**
      * change default parser factory
      * 
-     * @param callable $factory
+     * @param FactoryInterface $factory
      * @return $this
      */
-    public function setParserFactory(callable $factory);
+    public function setParserFactory(FactoryInterface $factory);
     
     /**
      * set up a new parser
@@ -99,13 +95,33 @@ interface SearchGateWayInterface
     /**
      * change default resultSet factory
      * 
-     * @param callable $factory
+     * @param FactoryInterface $factory
      * @return $this
      */
-    public function setResultSetFactory(callable $factory);
+    public function setResultSetFactory(FactoryInterface $factory);
     
     /**
-     * change default resultSet class name
+     * create a new Query builder
+     * @return QueryBuilderInterface
+     */
+    public function query();
+    
+    /**
+     * change default resultSet service alias or class name
+     * 
+     * @param string $resultSetClassName
+     * @return $this
+     */
+    public function setBuilderClassName($resultSetClassName);
+    
+    /**
+     * return resultSet service alias or class name
+     * @return string
+     */
+    public function getBuilderSetClassName();
+    
+     /**
+     * change default resultSet service alias or class name
      * 
      * @param string $resultSetClassName
      * @return $this
@@ -113,8 +129,9 @@ interface SearchGateWayInterface
     public function setResultSetClassName($resultSetClassName);
     
     /**
-     * return resultSet class name
+     * return resultSet service alias or class name
      * @return string
      */
     public function getResultSetClassName();
+    
 }

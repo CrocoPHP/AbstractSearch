@@ -39,7 +39,7 @@ class QueryBuilderFactory extends FactoryAbstract
       
         if($this->isValidClass($className)) {
             $Query = $this->getServiceLocator()->get($className);
-            $Query->setOptions($options);
+            $Query->setServiceLocator($this->getServiceLocator())->setOptions($options);
             return $Query;
         }
     }

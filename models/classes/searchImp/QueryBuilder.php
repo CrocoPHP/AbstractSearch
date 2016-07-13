@@ -25,14 +25,17 @@ use oat\taoSearch\model\factory\FactoryAbstract;
 use oat\taoSearch\model\factory\QueryFactory;
 use oat\taoSearch\model\search\QueryBuilderInterface;
 use oat\taoSearch\model\search\UsableTrait\LimitableTrait;
-use oat\taoSearch\model\search\UsableTrait\SortableTrait;
 use oat\taoSearch\model\search\UsableTrait\OptionsTrait;
+use oat\taoSearch\model\search\UsableTrait\SortableTrait;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
-class QueryBuilder implements QueryBuilderInterface {
+class QueryBuilder implements QueryBuilderInterface, ServiceLocatorAwareInterface {
     
     use SortableTrait;
     use LimitableTrait;
     use OptionsTrait;
+    use ServiceLocatorAwareTrait;
     
     /**
      * @var array
@@ -45,7 +48,7 @@ class QueryBuilder implements QueryBuilderInterface {
     /**
      * @var string
      */
-    protected $queryClassName = '\\oat\\taoSearch\\model\\searchImp\\Query';
+    protected $queryClassName = 'search.query.query';
     /**
      * @inherit
      */
@@ -64,7 +67,8 @@ class QueryBuilder implements QueryBuilderInterface {
      */
     public function newQuery() {
         $factory = $this->factory;
-        $query = $factory->get($this->queryClassName);
+        $factory->setServiceLocator($this->serviceLocator);
+        $query = $factory->get($this->queryClassName)->setServiceLocator($this->serviceLocator);
         $this->storedQueries[] = $query;
         return $query;
     }

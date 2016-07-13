@@ -109,9 +109,9 @@ abstract class AbstractQueryParser implements QueryParserInterface {
 
         $command = $this->getOperator($operation->getOperator())->convert($operation);
         
-        $this->setConditions($command , $operation->getAnd(), 'and')
-                ->setConditions($command , $operation->getOr(), 'or')
-                ->addOperator($command);
+        $this->setConditions($command , $operation->getAnd(), 'and');
+        $this->setConditions($command , $operation->getOr(), 'or');
+        $this->addOperator($command);
         
         return $this;
         
