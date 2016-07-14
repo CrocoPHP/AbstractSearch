@@ -26,7 +26,7 @@ namespace oat\taoSearch\model\search\Query;
  * 
  * INTERFACE base for database driver escaper
  *
- * @author christophe
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 interface EscaperInterface {
     

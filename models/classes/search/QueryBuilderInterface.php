@@ -21,14 +21,15 @@
 
 namespace oat\taoSearch\model\search;
 
-use \oat\taoSearch\model\factory\FactoryAbstract;
+use oat\taoSearch\model\factory\FactoryAbstract;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
 /**
  * Interface QueryBuilderInterface
  * use to create query from user data
  *
  * @package oat\taoSearch\model\search
  */
-interface QueryBuilderInterface extends LimitableInterface, SortableInterface, OptionsInterface {
+interface QueryBuilderInterface extends LimitableInterface, SortableInterface, OptionsInterface, ServiceLocatorAwareInterface {
     
     /**
      * change default query param className
@@ -39,7 +40,7 @@ interface QueryBuilderInterface extends LimitableInterface, SortableInterface, O
 
     /**
      * change default query param factory
-     * @param callable $factory
+     * @param FactoryAbstract $factory
      * @return $this
      */
     public function setQueryFactory(FactoryAbstract $factory);

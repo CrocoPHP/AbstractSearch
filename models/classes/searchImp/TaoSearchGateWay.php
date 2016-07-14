@@ -53,5 +53,6 @@ class TaoSearchGateWay extends AbstractSearchGateWay
      */
     public function printQuery() {
         echo $this->parsedQuery;
+        return $this;
     }
 }

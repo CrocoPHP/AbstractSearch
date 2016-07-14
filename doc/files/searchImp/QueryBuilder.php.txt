@@ -33,7 +33,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * implemented generic query builder
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryBuilder implements QueryBuilderInterface, ServiceLocatorAwareInterface {
+class QueryBuilder implements QueryBuilderInterface {
     
     use SortableTrait;
     use LimitableTrait;

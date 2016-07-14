@@ -19,10 +19,12 @@
 
 namespace oat\taoSearch\model\searchImp;
 
+use oat\taoSearch\model\search\QueryBuilderInterface;
+use oat\taoSearch\model\search\QueryParserInterface;
 use oat\taoSearch\model\search\SearchGateWayInterface;
 use oat\taoSearch\model\search\UsableTrait\DriverSensitiveTrait;
 use oat\taoSearch\model\search\UsableTrait\OptionsTrait;
-use \Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
  * Abstract base for search gateway
  * use to manage connection to database system
@@ -93,7 +95,7 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     
     /**
      * parse QueryBuilder and store parsed query
-     * @param \oat\taoSearch\model\search\QueryBuilderInterface $Builder
+     * @param QueryBuilderInterface $Builder
      * @return $this
      */
     public function parse(QueryBuilderInterface $Builder) {
@@ -126,7 +128,15 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
         return $this->connector;
     }
     
-     
+    /**
+     * query parser factory
+     * @return QueryParserInterface
+     */
+    public function getParser() {
+       $parser = $this->getServiceLocator()->get($this->parserList[$this->driverName]);
+       $parser->setServiceLocator($this->serviceLocator)->setDriverEscaper($this->driverEscaper)->setOptions($this->options)->prefixQuery();
+       return $parser;
+    }
     
     /**
      * change result set class name or service name
@@ -137,16 +147,7 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
         $this->resultSetClassName = $resultSetClassName;
         return $this;
     }
-    /**
-     * query parser factory
-     * @return \oat\taoSearch\model\search\QueryParserInterface
-     */
-    public function getParser() {
-       $parser = $this->getServiceLocator()->get($this->parserList[$this->driverName]);
-       $parser->setServiceLocator($this->serviceLocator)->setDriverEscaper($this->driverEscaper)->setOptions($this->options)->prefixQuery();
-       return $parser;
-    }
-
+    
      /**
      * return resultSet class name or service name
      * @return string 
@@ -179,7 +180,7 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
      * return query builderclass name or service name
      * @return string
      */
-    public function getBuilderSetClassName() {
+    public function getBuilderClassName() {
         return $this->builderClassName;
     }
 }

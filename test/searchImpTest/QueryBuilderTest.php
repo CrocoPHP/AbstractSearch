@@ -20,14 +20,17 @@
 
 namespace oat\taoSearch\test\searchImpTest;
 
+use oat\taoSearch\model\factory\QueryFactory;
+use oat\taoSearch\model\searchImp\Query;
 use oat\taoSearch\model\searchImp\QueryBuilder;
+use oat\taoSearch\test\UnitTestHelper;
 
 /**
  * QueryBuilder test
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryBuilderTest extends \oat\taoSearch\test\UnitTestHelper {
+class QueryBuilderTest extends UnitTestHelper {
     
     /**
      *
@@ -50,7 +53,7 @@ class QueryBuilderTest extends \oat\taoSearch\test\UnitTestHelper {
     
     public function testSetQueryFactory() {
         
-        $Factory = new \oat\taoSearch\model\factory\QueryFactory;
+        $Factory = new QueryFactory;
         
         $this->assertSame($this->instance , $this->instance->setQueryFactory($Factory));
         $this->assertSame($Factory , $this->getInaccessibleProperty($this->instance , 'factory'));
@@ -60,10 +63,10 @@ class QueryBuilderTest extends \oat\taoSearch\test\UnitTestHelper {
     public function testGetStoredQueries() {
         
         $fixtureStoredQueries = [
-            new \oat\taoSearch\model\searchImp\Query(),
-            new \oat\taoSearch\model\searchImp\Query(),
-            new \oat\taoSearch\model\searchImp\Query(),
-            new \oat\taoSearch\model\searchImp\Query(),
+            new Query(),
+            new Query(),
+            new Query(),
+            new Query(),
         ];
         
         $this->setInaccessibleProperty($this->instance , 'storedQueries', $fixtureStoredQueries);

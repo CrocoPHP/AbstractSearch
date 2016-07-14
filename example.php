@@ -54,5 +54,4 @@ $Query->addOperation('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', oat\taoS
 $Query->addOperation('http://www.tao.lu/Ontologies/TAOItem.rdf#ItemModel' , oat\taoSearch\model\search\helper\SupportedOperatorHelper::EQUAL ,  'http://www.tao.lu/Ontologies/TAOItem.rdf#QTI');
 $Builder->setOffset(10)->sort(['modelId' => 'desc']);
 
-$sql = $GateWay->getParser()->setCriteriaList($Builder)->parse();
-$GateWay->search($sql);
+$sql = $GateWay->parse($Builder)->search();

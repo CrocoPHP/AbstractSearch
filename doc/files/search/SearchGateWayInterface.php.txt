@@ -114,7 +114,7 @@ interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterf
      * return resultSet service alias or class name
      * @return string
      */
-    public function getBuilderSetClassName();
+    public function getBuilderClassName();
     
      /**
      * change default resultSet service alias or class name

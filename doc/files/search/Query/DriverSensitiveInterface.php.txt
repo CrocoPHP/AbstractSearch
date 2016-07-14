@@ -26,7 +26,7 @@ namespace oat\taoSearch\model\search\Query;
  * use for Driver sensitive classes
  * usefull for QueryParser
  *
- * @author christophe
+ * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 interface DriverSensitiveInterface {
     
