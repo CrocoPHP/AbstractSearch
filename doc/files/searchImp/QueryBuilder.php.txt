@@ -29,7 +29,10 @@ use oat\taoSearch\model\search\UsableTrait\OptionsTrait;
 use oat\taoSearch\model\search\UsableTrait\SortableTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-
+/**
+ * implemented generic query builder
+ * @author Christophe GARCIA <christopheg@taotesting.com>
+ */
 class QueryBuilder implements QueryBuilderInterface, ServiceLocatorAwareInterface {
     
     use SortableTrait;
@@ -38,32 +41,41 @@ class QueryBuilder implements QueryBuilderInterface, ServiceLocatorAwareInterfac
     use ServiceLocatorAwareTrait;
     
     /**
+     * stored queries
+     * array of \oat\taoSearch\model\search\QueryInterface
      * @var array
      */
     protected $storedQueries = [];
     /**
-     * @var callable 
+     * query factory
+     * @var \oat\taoSearch\model\factory\FactoryInterface 
      */
     protected $factory;
     /**
+     * query service name
      * @var string
      */
     protected $queryClassName = 'search.query.query';
     /**
-     * @inherit
+     * constructor
+     * initialyze queery factory
      */
-    
     public function __construct() {
         $this->factory = new QueryFactory;
     }
 
-
+    /**
+     * stored queries
+     * array of \oat\taoSearch\model\search\QueryInterface
+     * @return array
+     */
     public function getStoredQueries() {
         return $this->storedQueries;
     }
     
     /**
-     * @inherit
+     * generate à new query and put it in store
+     * @return \oat\taoSearch\model\search\QueryInterface
      */
     public function newQuery() {
         $factory = $this->factory;
@@ -74,7 +86,9 @@ class QueryBuilder implements QueryBuilderInterface, ServiceLocatorAwareInterfac
     }
     
     /**
-     * @inherit
+     * change default Query service name
+     * @param string $queryClassName
+     * @return $this
      */
     public function setQueryClassName($queryClassName) {
         $this->queryClassName = $queryClassName;
@@ -82,7 +96,9 @@ class QueryBuilder implements QueryBuilderInterface, ServiceLocatorAwareInterfac
     }
     
     /**
-     * @inherit
+     * change default query factory
+     * @param FactoryAbstract $factory
+     * @return $this
      */
     public function setQueryFactory(FactoryAbstract $factory) {
         $this->factory = $factory;

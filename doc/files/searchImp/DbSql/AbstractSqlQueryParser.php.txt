@@ -24,8 +24,11 @@ namespace oat\taoSearch\model\searchImp\DbSql;
 use oat\taoSearch\model\search\exception\QueryParsingException;
 use \oat\taoSearch\model\searchImp\AbstractQueryParser;
 /**
+ * transform QueryBuilder criteria to an exploitable query
+ * for database system driver
+ * 
  * Abstract base for SQL Query Parser
- * {@inheritDoc}
+ * 
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 abstract class AbstractSqlQueryParser extends AbstractQueryParser {

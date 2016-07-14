@@ -25,7 +25,9 @@ use oat\taoSearch\model\search\UsableTrait\OptionsTrait;
 use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
  * Abstract base for search gateway
- * {@inheritdoc}
+ * use to manage connection to database system
+ * must provide right parser, builder and ResultSet
+ * 
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 abstract class AbstractSearchGateWay implements SearchGateWayInterface
@@ -70,7 +72,12 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
      * @var mixed 
      */
     protected $connector;
-    
+    /**
+     * query usable by database driver
+     * @var mixed 
+     */
+    protected $parsedQuery;
+
     /**
      * init the gateway
      * @return $this
@@ -85,6 +92,16 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     }
     
     /**
+     * parse QueryBuilder and store parsed query
+     * @param \oat\taoSearch\model\search\QueryBuilderInterface $Builder
+     * @return $this
+     */
+    public function parse(QueryBuilderInterface $Builder) {
+        $this->parsedQuery = $this->getParser()->setCriteriaList($Builder)->parse();
+        return $this;
+    }
+
+     /**
      * return configuration driver name
      * @return string
      */
@@ -103,10 +120,13 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     }
     /**
      * return database connector
+     * @return mixed
      */
     public function getConnector() {
         return $this->connector;
     }
+    
+     
     
     /**
      * change result set class name or service name

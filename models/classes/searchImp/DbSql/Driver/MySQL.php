@@ -22,7 +22,10 @@ namespace oat\taoSearch\model\searchImp\DbSql\Driver;
 use oat\taoSearch\model\search\Query\EscaperAbstract;
 
 /**
- * {@inheritDoc}
+ * Escapers are used to format query params
+ * they quote string and escape table name (for example)
+ * using the right chars
+ * 
  * used for MySQL databases
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>

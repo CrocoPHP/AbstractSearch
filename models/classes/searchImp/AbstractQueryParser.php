@@ -100,8 +100,9 @@ abstract class AbstractQueryParser implements QueryParserInterface {
         }
         return $this;
     }
+    
     /**
-     * 
+     * set QueryBuilder to parse
      * @param QueryBuilderInterface $criteriaList
      * @return $this
      */
@@ -236,6 +237,7 @@ abstract class AbstractQueryParser implements QueryParserInterface {
      * 
      * @param mixed $command main query 
      * @param mixed $condition condition to merger
+     * @param mixed|null $separator
      * @return $this;
      */
     abstract protected function mergeCondition(&$command , $condition, $separator = null);

@@ -34,17 +34,30 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
 
     use OptionsTrait;
     use ServiceLocatorAwareTrait;
-    
+    /**
+     * stored conditions
+     * @var array
+     */
     protected $storedQueryParams = [];
-    
+    /**
+     * default QueryParam factory
+     * @var \oat\taoSearch\model\factory\FactoryInterface
+     */
     protected $factory;
-    
+    /**
+     * query param service name
+     * @var string
+     */
     protected $queryParamClassName = 'search.query.param';
-    
+    /**
+     * initialyse factory
+     */
     public function __construct() {
         $this->factory = new QueryParamFactory;
     }
-    
+    /**
+     * reset query conditions
+     */
     public function __clone() {
         $this->reset();
     }
@@ -58,9 +71,14 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
         return $this;
     }
 
-        /**
-     * @inherit
-     */
+     /**
+      * create a new QueryParam and add it to store.
+      * @param string $name
+      * @param string $operator
+      * @param mixed $value
+      * @param boolean $andSeparator
+      * @return \oat\taoSearch\model\search\QueryParamInterface
+      */
     public function addOperation($name, $operator, $value, $andSeparator = true) {
         $param = $this->factory
                 ->setServiceLocator($this->serviceLocator)
@@ -71,20 +89,25 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
     }
     
     /**
-     * @inherit
+     * return an array of \oat\taoSearch\model\search\QueryParamInterface
+     * @return array
      */
     public function getStoredQueryParams() {
         return $this->storedQueryParams;
     }
     /**
-     * @inherit
+     * change the QueryParam service name
+     * @param string $queryParamsClassName
+     * @return $this
      */
     public function setQueryParamClassName($queryParamsClassName) {
         $this->queryParamClassName = $queryParamsClassName;
         return $this;
     }
     /**
-     * @inherit
+     * change the default QueryParam factory
+     * @param FactoryAbstract $factory
+     * @return $this
      */
     public function setQueryParamFactory(FactoryAbstract $factory) {
         $this->factory = $factory;

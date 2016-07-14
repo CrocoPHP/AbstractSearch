@@ -49,7 +49,7 @@ class In extends AbstractRdfOperator {
         return '(' . implode(' ' . $this->getDriverEscaper()->getFieldsSeparator() . ' ' ,  $parseValues) . ')';
     }
     /**
-     * {@inheritdoc}
+     * convert Query Param to mysql query string
      * @param QueryParamInterface $query
      * @return string
      * @throws QueryParsingException

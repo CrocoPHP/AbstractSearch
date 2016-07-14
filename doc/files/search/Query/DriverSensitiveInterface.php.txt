@@ -23,7 +23,8 @@
 namespace oat\taoSearch\model\search\Query;
 
 /**
- * Description of DriverSensible
+ * use for Driver sensitive classes
+ * usefull for QueryParser
  *
  * @author christophe
  */

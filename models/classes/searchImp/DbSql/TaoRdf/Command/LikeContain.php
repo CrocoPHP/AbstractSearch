@@ -33,7 +33,7 @@ class LikeContain extends AbstractRdfOperator {
      */
     protected $operator = 'LIKE';
     /**
-     * {@inheritdoc}
+     * convert Query Param to mysql query string
      * @param QueryParamInterface $query
      * @return string
      */

@@ -24,7 +24,7 @@ namespace oat\taoSearch\model\searchImp\DbSql\TaoRdf\Command;
 
 use \oat\taoSearch\model\search\QueryParamInterface;
 /**
- * Description of LikeContain
+ * create a subquery with LIKE "value%"
  *
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
@@ -36,7 +36,7 @@ class LikeBegin extends AbstractRdfOperator {
     protected $operator = 'LIKE';
 
     /**
-     * {@inheritdoc}
+     * convert Query Param to mysql query string
      * @param QueryParamInterface $query
      * @return string
      */

@@ -28,8 +28,13 @@ namespace oat\taoSearch\model\factory;
  */
 class QueryBuilderFactory extends FactoryAbstract
 {
+    /**
+     * supported interface 
+     * @var string
+     */
     protected $validInterface = 'oat\\taoSearch\\model\\search\\QueryBuilderInterface';
     /**
+     * return a new Query builder
      * @param string $className
      * @param array $options
      * @return \oat\taoSearch\model\factory\QueryInterface

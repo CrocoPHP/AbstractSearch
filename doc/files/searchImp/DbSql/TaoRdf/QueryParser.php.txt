@@ -25,7 +25,9 @@ use \oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser;
 use \oat\taoSearch\model\search\helper\SupportedOperatorHelper;
 /**
  * Tao RDF Onthology parser
- * {@inheritDoc}
+ * 
+ * transform QueryBuilder criteria to an exploitable query
+ * for database system driver
  * 
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */

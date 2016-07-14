@@ -46,7 +46,7 @@ class Between extends AbstractRdfOperator {
         return implode(' ' . $this->getDriverEscaper()->dbCommand('AND') . ' ' ,  $parseValues);
     }
     /**
-     * {@inheritdoc}
+     * convert Query Param to mysql query string
      * @param QueryParamInterface $query
      * @return string
      * @throws QueryParsingException

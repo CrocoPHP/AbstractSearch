@@ -24,25 +24,48 @@ namespace oat\taoSearch\model\searchImp;
 use \oat\taoSearch\model\search\QueryParamInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
-
+/**
+ * imlpemented QueryParam
+ * @author Christophe GARCIA <christopheg@taotesting.com>
+ */
 class QueryParam implements QueryParamInterface,ServiceLocatorAwareInterface {
     
     use ServiceLocatorAwareTrait;
-    
+    /**
+     * property name
+     * @var string
+     */
     protected $name;
-    
+    /**
+     * operator
+     * @var string
+     */
     protected $operator;
-    
+    /**
+     * property value
+     * @var mixed
+     */
     protected $value;
-    
+    /**
+     * and = true , or  = false
+     * @var boolean
+     */
     protected $separator;
-    
+    /**
+     * others conditions separated by and 
+     * @var array
+     */
     protected $and = [];
-    
+    /**
+     * others conditions separated by or 
+     * @var array
+     */
     protected $or = [];
     
     /**
-     * @inherit
+     * return main operator if is unchanged
+     * @param string|null $operator
+     * @return string
      */
     protected function setDefaultOperator($operator) {
         if(is_null($operator)) {
@@ -52,7 +75,10 @@ class QueryParam implements QueryParamInterface,ServiceLocatorAwareInterface {
     }
 
     /**
-     * @inherit
+     * add a new condition on same property with AND separator
+     * @param mixed $value
+     * @param string|null $operator
+     * @return $this
      */
     public function addAnd($value , $operator = null) {
         
@@ -62,7 +88,10 @@ class QueryParam implements QueryParamInterface,ServiceLocatorAwareInterface {
         return $this;
     }
     /**
-     * @inherit
+     * add a new condition on same property with OR separator
+     * @param mixed $value
+     * @param string|null $operator
+     * @return $this
      */
     public function addOr($value , $operator = null) {
         
@@ -73,35 +102,41 @@ class QueryParam implements QueryParamInterface,ServiceLocatorAwareInterface {
     }
     
     /**
-     * @inherit
+     * return property name
+     * @return string
      */
     public function getName() {
         return $this->name;
     }
     
     /**
-     * @inherit
+     * return operator name
+     * @return string
      */
     public function getOperator() {
         return $this->operator;
     }
     
     /**
-     * @inherit
+     * return value
+     * @return mixed
      */
     public function getValue() {
         return $this->value;
     }
     
     /**
-     * @inherit
+     * return separator
+     * @return boolean
      */
     public function getSeparator() {
         return $this->separator;
     }
     
     /**
-     * @inherit
+     * set up property name
+     * @param string $name
+     * @return $this
      */
     public function setName($name) {
         $this->name = $name;
@@ -109,7 +144,9 @@ class QueryParam implements QueryParamInterface,ServiceLocatorAwareInterface {
     }
     
     /**
-     * @inherit
+     * set up operator name
+     * @param string $operator
+     * @return $this
      */
     public function setOperator($operator) {
         $this->operator = $operator;
@@ -117,7 +154,9 @@ class QueryParam implements QueryParamInterface,ServiceLocatorAwareInterface {
     }
     
     /**
-     * @inherit
+     * set up property value
+     * @param mixed $value
+     * @return $this
      */
     public function setValue($value) {
         $this->value = $value;
@@ -125,20 +164,26 @@ class QueryParam implements QueryParamInterface,ServiceLocatorAwareInterface {
     }
     
     /**
-     * @inherit
+     * set up separator value 
+     * with the next QueryParam condition 
+     * and = true , or  = false
+     * @param string $separator
+     * @return $this
      */
     public function setAndSeparator($separator) {
         $this->separator = $separator;
         return $this;
     }
     /**
-     * @inherit
+     * return and
+     * @return array
      */
     public function getAnd() {
        return $this->and; 
     }
     /**
-     * @inherit
+     * return or
+     * @return array
      */
     public function getOr() {
        return $this->or;

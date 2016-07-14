@@ -21,7 +21,6 @@
 
 namespace oat\taoSearch\model\search;
 
-use oat\taoSearch\model\factory\FactoryInterface;
 use oat\taoSearch\model\search\exception\SearchGateWayExeption;
 use oat\taoSearch\model\search\Query\DriverSensitiveInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -30,7 +29,8 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
  * Interface SearchGateWayInterface
  *
  * use to manage connection to database system
- *
+ * must provide right parser, builder and ResultSet
+ * 
  * @package oat\taoSearch\model\search
  */
 interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterface, ServiceLocatorAwareInterface
@@ -53,7 +53,7 @@ interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterf
      */
     public function getConnector();
 
-        /**
+     /**
      * try to connect to database. throw an exception
      * if connection failed.
      *
@@ -67,20 +67,23 @@ interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterf
      * throws a exception on failure
      *
      * @throws SearchGateWayExeption
-     * @param $query
      * @return ResultSetInterface
      */
-    public function search($query);
-
-    /**
-     * change default parser factory
-     * 
-     * @param FactoryInterface $factory
-     * @return $this
-     */
-    public function setParserFactory(FactoryInterface $factory);
+    public function search();
     
     /**
+     * print parsed query
+     * @return $this
+     */
+    public function printQuery();
+    /**
+     * parse QueryBuilder and store parsed query
+     * @param \oat\taoSearch\model\search\QueryBuilderInterface $Builder
+     * @return $this
+     */
+    public function parse(QueryBuilderInterface $Builder);
+
+        /**
      * set up a new parser
      * @return QueryParserInterface
      */
@@ -91,14 +94,7 @@ interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterf
      * @return string  
      */
     public function getDriverName();
-    
-    /**
-     * change default resultSet factory
-     * 
-     * @param FactoryInterface $factory
-     * @return $this
-     */
-    public function setResultSetFactory(FactoryInterface $factory);
+
     
     /**
      * create a new Query builder

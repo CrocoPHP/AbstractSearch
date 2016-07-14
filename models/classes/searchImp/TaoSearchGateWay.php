@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; under version 2
@@ -21,29 +21,37 @@
 namespace oat\taoSearch\model\searchImp;
 
 /**
- * tao gateWay
- *
+ * specific tao gateWay.
+ * 
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
 class TaoSearchGateWay extends AbstractSearchGateWay 
 {
+     /**
+     * try to connect to database. throw an exception
+     * if connection failed.
+     *
+     * @throws SearchGateWayExeption
+     * @return $this
+     */
     public function connect() {
         return true;
     }
-
-    public function search($query) {
+    /**
+     * not implemented just use to print query
+     * @todo use generis persistence
+     */
+    public function search() {
         echo '<pre>';
-        echo $query;
+        echo $this->parsedQuery;
         echo '<pre>';
     }
-
-    public function setParserFactory(\oat\taoSearch\model\factory\FactoryInterface $factory) {
-        return $this;
+    
+    /**
+     * print parsed query
+     * @return $this
+     */
+    public function printQuery() {
+        echo $this->parsedQuery;
     }
-
-    public function setResultSetFactory(\oat\taoSearch\model\factory\FactoryInterface $factory) {
-        return $this;
-    }
-
-//put your code here
 }

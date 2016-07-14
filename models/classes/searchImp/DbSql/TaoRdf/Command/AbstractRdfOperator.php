@@ -53,7 +53,7 @@ class AbstractRdfOperator extends AbstractOperatorConverter {
         return '';
     }
     /**
-     * {@inheritdoc}
+     * convert Query Param to mysql query string
      * @param QueryParamInterface $query
      * @return string
      */
