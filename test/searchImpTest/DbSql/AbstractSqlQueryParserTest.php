@@ -68,7 +68,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         $this->setInaccessibleProperty($this->instance, 'query', $fixtureQuery);
         $this->setInaccessibleProperty($this->instance, 'operationSeparator', "\n");
         
-        $this->assertSame($this->instance, $this->callInaccessibleMethod('prepareOperator'));
+        $this->assertSame($this->instance, $this->invokeProtectedMethod($this->instance,'prepareOperator'));
         $this->assertSame($fixtureQuery . "\n" , $this->getInaccessibleProperty($this->instance, 'query'));
     }
     
@@ -81,7 +81,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         $expression   = '`text` like "test"';
         
         $this->setInaccessibleProperty($this->instance, 'query', $fixtureQuery);
-        $this->assertSame($this->instance, $this->callInaccessibleMethod('addOperator' , [$expression]));
+        $this->assertSame($this->instance, $this->invokeProtectedMethod($this->instance,'addOperator' , [$expression]));
         $this->assertSame($fixtureQuery . $expression , $this->getInaccessibleProperty($this->instance, 'query'));
     }
     
@@ -116,7 +116,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         $DriverMock = $DriverProphecy->reveal();
         $this->instance->expects($this->any())->method('getDriverEscaper')->willReturn($DriverMock);
         $this->setInaccessibleProperty($this->instance, 'query', $fixtureQuery . $expression);
-        $this->assertSame($this->instance, $this->callInaccessibleMethod('addSeparator' , [$operator]));
+        $this->assertSame($this->instance, $this->invokeProtectedMethod($this->instance,'addSeparator' , [$operator]));
         $this->assertSame($fixtureQuery . $expression . ' ' . $expectedString . ' ' , $this->getInaccessibleProperty($this->instance, 'query'));
     }
     
@@ -141,7 +141,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         if($exception) {
             $this->setExpectedException('oat\taoSearch\model\search\exception\QueryParsingException' , 'table option is mandatory');
         }
-        $this->assertSame($expected, $this->callInaccessibleMethod('validateOptions' , [$options]));
+        $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'validateOptions' , [$options]));
     }
     
     public function setFieldListProvider() {
@@ -184,7 +184,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
          
         $DriverMock = $DriverProphecy->reveal();
         $this->instance->expects($this->any())->method('getDriverEscaper')->willReturn($DriverMock);
-        $this->assertSame($expected, $this->callInaccessibleMethod('setFieldList' , [$options]));
+        $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'setFieldList' , [$options]));
     }
     
     public function addLimitProvide() {
@@ -220,7 +220,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         $DriverMock = $DriverProphecy->reveal();
         
         $this->instance->expects($this->any())->method('getDriverEscaper')->willReturn($DriverMock);
-        $this->assertSame($expected, $this->callInaccessibleMethod('addLimit' , [$limit , $offset]));
+        $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'addLimit' , [$limit , $offset]));
     }
     
     public function addSortProvider() {
@@ -274,7 +274,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         $DriverMock = $DriverProphecy->reveal();
         
         $this->instance->expects($this->any())->method('getDriverEscaper')->willReturn($DriverMock);
-        $this->assertSame($expected, $this->callInaccessibleMethod('addSort' , [$sortCriteria]));
+        $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'addSort' , [$sortCriteria]));
         
     }
     
@@ -311,7 +311,7 @@ class AbstractSqlQueryParserTest extends UnitTestHelper {
         $this->instance->expects($this->once())->method('addSort')->with($fixtureSortCriteria)->willReturn($fixtureSort);
         $this->instance->expects($this->once())->method('addLimit')->with($fixtureLimit , $fixtureOffset)->willReturn($fixtureLimitOffset);
         
-        $this->assertSame($this->instance, $this->callInaccessibleMethod('finishQuery'));
+        $this->assertSame($this->instance, $this->invokeProtectedMethod($this->instance,'finishQuery'));
         $this->assertSame($expected, $this->getInaccessibleProperty($this->instance, 'query'));
      }
     

@@ -47,7 +47,7 @@ class AbstractRdfOperatorTest extends UnitTestHelper {
         $this->instance->expects($this->once())->method('getDriverEscaper')->willReturn($DriverMock);
         $this->setInaccessibleProperty($this->instance, 'operator', $operator);
         
-        $this->assertSame($operator, $this->callInaccessibleMethod('getOperator'));
+        $this->assertSame($operator, $this->invokeProtectedMethod($this->instance,'getOperator'));
     }
     
     public function testSetPropertyName() {
@@ -73,7 +73,7 @@ class AbstractRdfOperatorTest extends UnitTestHelper {
         
         $this->instance->expects($this->any())->method('getDriverEscaper')->willReturn($DriverMock);
         
-        $this->assertSame($expected, $this->callInaccessibleMethod('setPropertyName' , [$fixtureName]));
+        $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'setPropertyName' , [$fixtureName]));
     }
     
     public function testConvert() {

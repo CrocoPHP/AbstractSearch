@@ -100,7 +100,7 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
         $this->setInaccessibleProperty($this->instance, 'operationSeparator', "\n");
         $this->setInaccessibleProperty($this->instance, 'options', $fixtureOptions);
         $this->setInaccessibleProperty($this->instance, 'driverEscaper', $DriverMock);
-        $this->assertSame($expectedQuery, $this->callInaccessibleMethod('initQuery' , [$fixtureFields ,$fixturelanguageEmpty,$fixturelanguageStrict ]));
+        $this->assertSame($expectedQuery, $this->invokeProtectedMethod($this->instance,'initQuery' , [$fixtureFields ,$fixturelanguageEmpty,$fixturelanguageStrict ]));
     }
     
     public function setLanguageConditionProvider() {
@@ -135,7 +135,7 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
         $this->setInaccessibleProperty($this->instance, 'operationSeparator', "\n");
         $this->setInaccessibleProperty($this->instance, 'driverEscaper', $DriverMock);
         
-        $this->assertSame($expected, $this->callInaccessibleMethod('setLanguageCondition' , [$language , $emptyAvailable]));
+        $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'setLanguageCondition' , [$language , $emptyAvailable]));
     }
     
     public function testAddOperator() {
@@ -159,7 +159,7 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
         $this->setInaccessibleProperty($this->instance, 'options', ['table' => 'statements']);
         $this->setInaccessibleProperty($this->instance, 'driverEscaper', $DriverMock);
         
-        $this->assertSame($this->instance, $this->callInaccessibleMethod('addOperator' , [$fixtureExpression]));
+        $this->assertSame($this->instance, $this->invokeProtectedMethod($this->instance,'addOperator' , [$fixtureExpression]));
         $this->assertSame($expected , $this->getInaccessibleProperty($this->instance, 'query'));
     }
     
@@ -206,7 +206,7 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
         $this->setInaccessibleProperty($this->instance, 'driverEscaper', $DriverMock);
         
         $arguments = [&$command , $condition, $separator];
-        $this->assertSame($this->instance, $this->callInaccessibleMethod('mergeCondition' , $arguments));
+        $this->assertSame($this->instance, $this->invokeProtectedMethod($this->instance,'mergeCondition' , $arguments));
         $this->assertSame($expected , $arguments[0]);
     }
     
@@ -251,7 +251,7 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
         $this->setInaccessibleProperty($this->instance, 'operationSeparator', "\n");
         $this->setInaccessibleProperty($this->instance, 'criteriaList', $BuilderMock);
         
-        $this->assertSame($this->instance, $this->callInaccessibleMethod('finishQuery' ));
+        $this->assertSame($this->instance, $this->invokeProtectedMethod($this->instance,'finishQuery' ));
         $this->assertSame($expected , $this->getInaccessibleProperty($this->instance, 'query'));
     }
 

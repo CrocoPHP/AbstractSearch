@@ -96,7 +96,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
         
         $this->instance->expects($this->once())->method('parseOperation')->with($mockParam)->willReturn($this->instance);
         
-        $this->assertSame($this->instance , $this->callInaccessibleMethod('parseQuery' , [$MockQuery]));
+        $this->assertSame($this->instance , $this->invokeProtectedMethod($this->instance , 'parseQuery' , [$MockQuery]));
     }
     
     public function testSetNextSeparator() {
@@ -111,10 +111,10 @@ class AbstractQueryParserTest extends UnitTestHelper {
                 );
         $this->instance->expects($this->once())->method('addSeparator')->with($fixtureAnd)->willReturn($this->instance);
         
-        $this->assertSame($this->instance, $this->callInaccessibleMethod('setNextSeparator' , [$fixtureAnd]));
+        $this->assertSame($this->instance, $this->invokeProtectedMethod($this->instance ,'setNextSeparator' , [$fixtureAnd]));
         $this->assertSame($fixtureAnd, $this->getInaccessibleProperty($this->instance, 'nextSeparator'));
         
-        $this->assertSame($this->instance, $this->callInaccessibleMethod('setNextSeparator' , [$fixtureOr]));
+        $this->assertSame($this->instance, $this->invokeProtectedMethod($this->instance ,'setNextSeparator' , [$fixtureOr]));
         $this->assertSame($fixtureOr, $this->getInaccessibleProperty($this->instance, 'nextSeparator'));
     }
     
@@ -154,7 +154,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
                 ->with($fixtureCommand , $convertOperation , $fixtureSeparator)
                 ->willReturn($fixtureCommand);
         
-        $this->assertSame($fixtureCommand , $this->callInaccessibleMethod('setConditions' , [&$fixtureCommand , $fixtureConditionList , $fixtureSeparator]));
+        $this->assertSame($fixtureCommand , $this->invokeProtectedMethod($this->instance ,'setConditions' , [&$fixtureCommand , $fixtureConditionList , $fixtureSeparator]));
     }
     
     public function testGetOperator() {
@@ -190,7 +190,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
         $this->setInaccessibleProperty($this->instance, 'supportedOperators', $fixtureSupportedOperator);
         $this->setInaccessibleProperty($this->instance, 'operatorNameSpace', $fixtureNameSpace);
         
-        $this->assertSame($mockOperator, $this->callInaccessibleMethod('getOperator' , [$fixtureOperator]));
+        $this->assertSame($mockOperator, $this->invokeProtectedMethod($this->instance,'getOperator' , [$fixtureOperator]));
     }
     
     public function testGetOperatorFailed() {
@@ -202,7 +202,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
         $fixtureOperator  = 'contain';
         $this->setExpectedException('\oat\taoSearch\model\search\exception\QueryParsingException');
         $this->setInaccessibleProperty($this->instance, 'supportedOperators', []);
-        $this->callInaccessibleMethod('getOperator' , [$fixtureOperator]);
+        $this->invokeProtectedMethod($this->instance,'getOperator' , [$fixtureOperator]);
     }
     
     public function testParseOperation() {
@@ -244,7 +244,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
                         )
                 ->willReturnOnConsecutiveCalls($this->instance , $this->instance);
         
-        $this->assertSame($this->instance, $this->callInaccessibleMethod('parseOperation' , [$mockParam]));
+        $this->assertSame($this->instance, $this->invokeProtectedMethod($this->instance,'parseOperation' , [$mockParam]));
     }
     
     public function testGetOperationValueQuery() {
@@ -261,7 +261,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
         $MockQuery = $QueryProphecy->reveal();
         
         $this->instance->expects($this->once())->method('parseQuery')->with($MockQuery)->willReturn($fixtureValue);
-        $this->assertSame($fixtureValue, $this->callInaccessibleMethod('getOperationValue' , [$MockQuery]));
+        $this->assertSame($fixtureValue, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$MockQuery]));
     }
     
     public function testGetOperationValueBuilder() {
@@ -280,7 +280,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
         $this->instance->expects($this->once())->method('setCriteriaList')->with($MockBuilder)->willReturn($this->instance);
         $this->instance->expects($this->once())->method('parse')->willReturn($fixtureValue);
         
-        $this->assertSame($fixtureValue, $this->callInaccessibleMethod('getOperationValue' , [$MockBuilder]));
+        $this->assertSame($fixtureValue, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$MockBuilder]));
     }
     
     public function testGetOperationValueString() {
@@ -290,7 +290,7 @@ class AbstractQueryParserTest extends UnitTestHelper {
                 );
         $fixtureValue = 'toto';
         
-        $this->assertSame($fixtureValue, $this->callInaccessibleMethod('getOperationValue' , [$fixtureValue]));
+        $this->assertSame($fixtureValue, $this->invokeProtectedMethod($this->instance,'getOperationValue' , [$fixtureValue]));
     }
     
 }

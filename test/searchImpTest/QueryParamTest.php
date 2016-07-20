@@ -98,7 +98,7 @@ class QueryParamTest extends \oat\taoSearch\test\UnitTestHelper {
      */
     public function testSetDefaultOperator($defaultOperator , $operator , $expected) {
         $this->setInaccessibleProperty($this->instance, 'operator', $defaultOperator);
-        $this->assertSame($expected, $this->callInaccessibleMethod('setDefaultOperator' , [$operator]));
+        $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'setDefaultOperator' , [$operator]));
     }
 
     public function tearDown() {

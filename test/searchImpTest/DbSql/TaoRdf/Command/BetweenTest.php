@@ -48,7 +48,7 @@ class BetweenTest extends UnitTestHelper {
         
         $this->instance->expects($this->any())->method('getDriverEscaper')->willReturn($DriverMock);
         
-        $this->assertSame($expected, $this->callInaccessibleMethod('setValuesList' , [$fixtureValues]));
+        $this->assertSame($expected, $this->invokeProtectedMethod($this->instance,'setValuesList' , [$fixtureValues]));
     }
     
     public function convertProvider() {

@@ -51,7 +51,7 @@ class FactoryAbstractTest extends \oat\taoSearch\test\UnitTestHelper
         
         $class = new $class();
         
-        $this->assertSame($return, $this->callInaccessibleMethod('isValidClass' , [$class]));
+        $this->assertSame($return, $this->invokeProtectedMethod($this->instance, 'isValidClass' , [$class]));
         
     }
     
