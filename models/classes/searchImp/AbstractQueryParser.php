@@ -85,7 +85,7 @@ abstract class AbstractQueryParser implements QueryParserInterface {
      * place between each operation
      * @var string
      */
-    protected $operationSeparator = '';
+    protected $operationSeparator = ' ';
     /**
      * change operation separator
      * to pretty print or unpretty print

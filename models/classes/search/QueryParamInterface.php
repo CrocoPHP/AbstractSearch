@@ -26,7 +26,7 @@ namespace oat\taoSearch\model\search;
  * @package oat\taoSearch\model\search
  */
 
-interface QueryParamInterface {
+interface QueryParamInterface extends ParentFluateInterface {
 
     /**
      * set object property on which you need to search

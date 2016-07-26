@@ -52,9 +52,15 @@ interface QueryBuilderInterface extends LimitableInterface, SortableInterface, O
     public function getStoredQueries();
     
     /**
-     * create a new query and stored it
+     * create a new query
      * @return QueryInterface
      */
     public function newQuery();
    
+    /**
+     * create a new query and store it
+     * @return QueryInterface
+     */
+    public function criteria();
+    
 }

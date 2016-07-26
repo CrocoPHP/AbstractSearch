@@ -38,6 +38,13 @@ class QueryParser extends AbstractSqlQueryParser {
      */
      protected $operatorNameSpace = '\\oat\\taoSearch\\model\\searchImp\\DbSql\\TaoRdf\\Command';
      /**
+      * language query part
+      * @var string
+      */
+     protected $language = '';
+
+
+     /**
       * suppoted operator class name
       * @var array
       */
@@ -64,18 +71,12 @@ class QueryParser extends AbstractSqlQueryParser {
         $options = $this->getOptions();
         
         if($this->validateOptions($options)) {
-            //default values
-            $languageStrict = '';
-            $languageEmpty  = '';
             
             if(array_key_exists('language' , $options)) {
-               $languageStrict = $this->setLanguageCondition($options['language']);
-               $languageEmpty  = $this->setLanguageCondition($options['language'] , true);
+               $this->language = $this->setLanguageCondition($options['language'], true);
             }
             
-            $fields = $this->setFieldList($options);
-            
-            $this->queryPrefix = $this->initQuery($fields, $languageEmpty, $languageStrict);
+            $this->queryPrefix = $this->initQuery();
         }
         return $this;
 
@@ -88,15 +89,18 @@ class QueryParser extends AbstractSqlQueryParser {
      * @param type $languageStrict
      * @return string
      */
-    protected function initQuery($fields , $languageEmpty , $languageStrict) {
+    protected function initQuery() {
         
         $table = $this->getOptions()['table'];
         
-        return $this->getDriverEscaper()->dbCommand('SELECT') . ' ' . $fields . ' ' . 
+        return $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
+                    $this->getDriverEscaper()->dbCommand('DISTINCT') .'(' .
+                    $this->getDriverEscaper()->reserved('subject') . ')' . ' ' . 
+                    $this->operationSeparator .
                     $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
                     $this->getDriverEscaper()->reserved($table) . ' ' .
+                    $this->operationSeparator .
                     $this->getDriverEscaper()->dbCommand('WHERE') . 
-                    $this->operationSeparator . $languageEmpty . ' ' .
                     $this->getDriverEscaper()->reserved('subject') . ' ' .
                     $this->getDriverEscaper()->dbCommand('IN') . 
                     $this->operationSeparator . '(' .
@@ -111,7 +115,7 @@ class QueryParser extends AbstractSqlQueryParser {
                     $this->getDriverEscaper()->dbCommand('FROM') . ' ' . 
                     $this->getDriverEscaper()->reserved($table) . ' ' .
                     $this->getDriverEscaper()->dbCommand('WHERE') .  
-                    $this->operationSeparator . $languageStrict . ' (';
+                    $this->operationSeparator ;
     }
 
      /**
@@ -149,7 +153,9 @@ class QueryParser extends AbstractSqlQueryParser {
                $this->getDriverEscaper()->dbCommand('FROM') .' ' . 
                $this->getDriverEscaper()->reserved($this->options['table']) . ' ' .
                $this->getDriverEscaper()->dbCommand('WHERE') . 
-               $this->operationSeparator . $expression . '))';
+               $this->operationSeparator . $this->language . 
+               $this->operationSeparator .$expression . ')' .
+               ')';
        return $this;
     }
     /**
@@ -172,7 +178,7 @@ class QueryParser extends AbstractSqlQueryParser {
      */
     protected function finishQuery() {
         
-        $this->query .= ') ' . $this->addLimit($this->criteriaList->getLimit() , $this->criteriaList->getOffset()) .' ) ' . 
+        $this->query .= ' ' . $this->addLimit($this->criteriaList->getLimit() , $this->criteriaList->getOffset()) .' ) ' . 
                 $this->operationSeparator .
                 $this->getDriverEscaper()->dbCommand('AS') .
                 ' subQuery ) ' . $this->operationSeparator . 

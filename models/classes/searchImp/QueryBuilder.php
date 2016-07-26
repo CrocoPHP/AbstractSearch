@@ -27,7 +27,6 @@ use oat\taoSearch\model\search\QueryBuilderInterface;
 use oat\taoSearch\model\search\UsableTrait\LimitableTrait;
 use oat\taoSearch\model\search\UsableTrait\OptionsTrait;
 use oat\taoSearch\model\search\UsableTrait\SortableTrait;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
  * implemented generic query builder
@@ -74,18 +73,26 @@ class QueryBuilder implements QueryBuilderInterface {
     }
     
     /**
-     * generate à new query and put it in store
+     * generate a new query 
      * @return \oat\taoSearch\model\search\QueryInterface
      */
     public function newQuery() {
         $factory = $this->factory;
         $factory->setServiceLocator($this->serviceLocator);
-        $query = $factory->get($this->queryClassName);
-        $this->storedQueries[] = $query;
-        return $query;
+        return $factory->get($this->queryClassName)->setParent($this);
     }
     
     /**
+     * create a new query and store it
+     * @return QueryInterface
+     */
+    public function criteria() {
+        $criteria = $this->newQuery();
+        $this->storedQueries[] = $criteria;
+        return $criteria;
+    }
+
+     /**
      * change default Query service name
      * @param string $queryClassName
      * @return $this

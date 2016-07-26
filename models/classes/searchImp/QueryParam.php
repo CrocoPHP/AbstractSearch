@@ -21,16 +21,21 @@
 
 namespace oat\taoSearch\model\searchImp;
 
-use \oat\taoSearch\model\search\QueryParamInterface;
+use oat\taoSearch\model\search\QueryParamInterface;
+use oat\taoSearch\model\search\UsableTrait\ParentFluateTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
  * imlpemented QueryParam
  * @author Christophe GARCIA <christopheg@taotesting.com>
  */
-class QueryParam implements QueryParamInterface,ServiceLocatorAwareInterface {
+class QueryParam 
+    implements QueryParamInterface , 
+        ServiceLocatorAwareInterface 
+        {
     
     use ServiceLocatorAwareTrait;
+    use ParentFluateTrait;
     /**
      * property name
      * @var string
@@ -188,6 +193,46 @@ class QueryParam implements QueryParamInterface,ServiceLocatorAwareInterface {
     public function getOr() {
        return $this->or;
     }
-
+    /**
+     * set up operator and value
+     * 
+     * example : 
+     * $this->equal('foo');
+     * $this->in(1 , 2 , 3 , 4 , 5);
+     * $this->between(1,10); 
+     * 
+     * @param string $name
+     * @param array $arguments
+     * @return $this
+     */
+    public function __call($name, $arguments) {
+        $this->operator = $name;
+        
+        if(empty($arguments)) {
+            $this->value = '';
+        } elseif(count($arguments) === 1) {
+            $this->value = $arguments[0];
+        } else {
+            $this->value = $arguments;
+        }
+        
+        return $this;
+    }
+    
+    /**
+     * set separator 'and' and return parent query 
+     * @return Query
+     */
+    public function andQuery() {
+        return $this->setAndSeparator(true)->getParent();
+    }
+    
+    /**
+     * set separator 'or' and return parent query 
+     * @return Query
+     */
+    public function orQuery() {
+        return $this->setAndSeparator(false)->getParent();
+    }
 
 }

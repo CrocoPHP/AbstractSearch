@@ -25,6 +25,7 @@ use oat\taoSearch\model\factory\FactoryAbstract;
 use oat\taoSearch\model\factory\QueryParamFactory;
 use oat\taoSearch\model\search\QueryInterface;
 use oat\taoSearch\model\search\UsableTrait\OptionsTrait;
+use oat\taoSearch\model\search\UsableTrait\ParentFluateTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 /**
@@ -34,6 +35,8 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
 
     use OptionsTrait;
     use ServiceLocatorAwareTrait;
+    use ParentFluateTrait;
+    
     /**
      * stored conditions
      * @var array
@@ -82,13 +85,22 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
     public function addOperation($name, $operator, $value, $andSeparator = true) {
         $param = $this->factory
                 ->setServiceLocator($this->serviceLocator)
-                ->get($this->queryParamClassName , [$name, $operator, $value, $andSeparator]);
+                ->get($this->queryParamClassName , [$name, $operator, $value, $andSeparator])
+                ->setParent($this);
         
         $this->storedQueryParams[] = $param;
         return $param;
     }
-    
     /**
+     * create a new QueryParam and add it to store.
+     * @param string $property
+     * @return \oat\taoSearch\model\search\QueryParamInterface
+     */
+    public function add($property) {
+        return $this->addOperation($property, null, null);
+    }
+
+        /**
      * return an array of \oat\taoSearch\model\search\QueryParamInterface
      * @return array
      */
@@ -113,6 +125,12 @@ class Query implements QueryInterface, ServiceLocatorAwareInterface {
         $this->factory = $factory;
         return $this;
     }
-
+    /**
+     * return parent builder
+     * @return QueryBuilderInterface
+     */
+    public function builder() {
+        return $this->getParent();
+    }
 }
 

@@ -42,9 +42,9 @@ class TaoSearchGateWay extends AbstractSearchGateWay
      * @todo use generis persistence
      */
     public function search() {
-        echo '<pre>';
+        echo "\n";
         echo $this->parsedQuery;
-        echo '<pre>';
+        echo "\n";
     }
     
     /**

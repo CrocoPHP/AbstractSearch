@@ -58,7 +58,7 @@ class In extends AbstractRdfOperator {
         if(!is_array($query->getValue())) {
             throw new QueryParsingException('Only array value is only supported by IN operator');
         }
-        return '' .$this->setPropertyName($query->getName()) . ' (' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $this->setValuesList($query->getValue()) . ')';
+        return '' .$this->setPropertyName($query->getName()) . ' ' . $this->getDriverEscaper()->reserved('object') . ' ' . $this->getOperator() . ' ' . $this->setValuesList($query->getValue()) . ' ';
     }
     
 }

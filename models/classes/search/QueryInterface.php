@@ -25,7 +25,7 @@ use \oat\taoSearch\model\factory\FactoryAbstract;
 /**
  * create query
  */
-interface QueryInterface extends OptionsInterface {
+interface QueryInterface extends OptionsInterface, ParentFluateInterface {
     
     /**
      * reset stored query params
@@ -61,5 +61,11 @@ interface QueryInterface extends OptionsInterface {
      * @return array
      */
     public function getStoredQueryParams();
+    
+    /**
+     * return parent builder
+     * @return QueryBuilderInterface
+     */
+    public function builder();
 }
 
