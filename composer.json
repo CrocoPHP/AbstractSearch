@@ -1,5 +1,5 @@
 {
-    "name" : "Abstact search library",
+    "name" : "crocophp/abstractsearch",
     "require" : {
         "zendframework/zend-servicemanager" : "~2.5.0"
     },
