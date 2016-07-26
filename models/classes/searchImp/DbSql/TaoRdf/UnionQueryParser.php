@@ -20,8 +20,9 @@
 
 namespace oat\taoSearch\model\searchImp\DbSql\TaoRdf;
 
-use \oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser;
-use \oat\taoSearch\model\search\helper\SupportedOperatorHelper;
+use oat\taoSearch\model\search\exception\QueryParsingException;
+use oat\taoSearch\model\search\helper\SupportedOperatorHelper;
+use oat\taoSearch\model\searchImp\DbSql\AbstractSqlQueryParser;
 /**
  * Tao RDF Onthology parser
  * 
