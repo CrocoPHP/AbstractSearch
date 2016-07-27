@@ -306,7 +306,7 @@ class UnionQueryParser extends AbstractSqlQueryParser {
             
             foreach ($sortCriteria as $field => $order) {
                 if(!array_key_exists($order, $orderOperator)) {
-                    throw new QueryParsingException();
+                    throw new QueryParsingException('unknow sort order ' . $order . ' ' );
                 }
                 $aliases[] = 
                         [

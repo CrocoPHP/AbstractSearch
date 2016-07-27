@@ -36,7 +36,7 @@ class MySQL extends EscaperAbstract
     * use to quote string value
     * @var string
     */
-    protected $escapeStringChar = '"';
+    protected $escapeStringChar = '\'';
     /**
      * use to quote database system reserved name
      * @var string
