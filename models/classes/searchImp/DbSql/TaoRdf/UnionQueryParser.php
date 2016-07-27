@@ -362,8 +362,10 @@ class UnionQueryParser extends AbstractSqlQueryParser {
             $this->query =
                 $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
                 'COUNT(*)' . ' ' . 
+                $this->getDriverEscaper()->dbCommand('AS')   . ' cpt ' .
                 $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
-                '(' . $this->query . ')' ;
+                '(' . $this->query . ') ' .
+                $this->getDriverEscaper()->dbCommand('AS') . ' rootq ' ;
         } else {
             $this->addSort($this->criteriaList->getSort());
             $this->query .= $this->operationSeparator . $this->addLimit($this->criteriaList->getLimit() , $this->criteriaList->getOffset());
