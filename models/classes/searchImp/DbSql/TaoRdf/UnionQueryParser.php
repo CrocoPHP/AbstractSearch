@@ -44,6 +44,12 @@ class UnionQueryParser extends AbstractSqlQueryParser {
      protected $userLanguage = '';
      
      /**
+      * flag to generate count query
+      * @var boolean
+      */
+     protected $count = false;
+
+     /**
       * default language query part 
       * used in order if user language isn't set 
       * @var string
@@ -91,13 +97,20 @@ class UnionQueryParser extends AbstractSqlQueryParser {
         }
         return $this;
 
-    } 
+    }
     
     /**
+     * set count
+     * @param boolean $count
+     * @return \oat\taoSearch\model\searchImp\DbSql\TaoRdf\UnionQueryParser
+     */
+    public function count($count = true) {
+        $this->count = $count;
+        return $this;
+    }
+
+        /**
      * query base
-     * @param type $fields
-     * @param type $languageEmpty
-     * @param type $languageStrict
      * @return string
      */
     protected function initQuery() {
@@ -344,8 +357,18 @@ class UnionQueryParser extends AbstractSqlQueryParser {
      */
     protected function finishQuery() {
         $this->query .= $this->closeOperation();
-        $this->addSort($this->criteriaList->getSort());
-        $this->query .= $this->operationSeparator . $this->addLimit($this->criteriaList->getLimit() , $this->criteriaList->getOffset());
+        
+        if($this->count) {
+            $this->query =
+                $this->getDriverEscaper()->dbCommand('SELECT') . ' ' .
+                'COUNT(*)' . ' ' . 
+                $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
+                '(' . $this->query . ')' ;
+        } else {
+            $this->addSort($this->criteriaList->getSort());
+            $this->query .= $this->operationSeparator . $this->addLimit($this->criteriaList->getLimit() , $this->criteriaList->getOffset());
+        }
+        
         $this->predicateLoop = 0;
         return $this;
     }
