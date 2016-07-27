@@ -20,6 +20,9 @@
 
 namespace oat\taoSearch\model\searchImp;
 
+use oat\taoSearch\model\search\exception\SearchGateWayExeption;
+use oat\taoSearch\model\search\QueryBuilderInterface;
+
 /**
  * specific tao gateWay.
  * 
@@ -55,7 +58,7 @@ class TaoSearchGateWay extends AbstractSearchGateWay
         return $this;
     }
 
-    public function count(\oat\taoSearch\model\search\QueryBuilderInterface $Builder) {
+    public function count(QueryBuilderInterface $Builder) {
          return $this->getParser()->setCriteriaList($Builder)->count(true)->parse(); 
     }
 
