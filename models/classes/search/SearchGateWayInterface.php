@@ -69,13 +69,20 @@ interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterf
      * @throws SearchGateWayExeption
      * @return ResultSetInterface
      */
-    public function search();
+    public function search(QueryBuilderInterface $Builder);
     
     /**
      * print parsed query
      * @return $this
      */
     public function printQuery();
+    
+    /**
+     * return query
+     * @return string
+     */
+    public function getQuery();
+
     /**
      * parse QueryBuilder and store parsed query
      * @param \oat\taoSearch\model\search\QueryBuilderInterface $Builder
@@ -129,5 +136,11 @@ interface SearchGateWayInterface extends OptionsInterface, DriverSensitiveInterf
      * @return string
      */
     public function getResultSetClassName();
+    
+    /**
+     * return query total count result
+     * @return integer
+     */
+    public function count(QueryBuilderInterface $Builder);
     
 }

@@ -183,4 +183,9 @@ abstract class AbstractSearchGateWay implements SearchGateWayInterface
     public function getBuilderClassName() {
         return $this->builderClassName;
     }
+    
+    public function getQuery() {
+        return $this->parsedQuery;
+    }
+
 }

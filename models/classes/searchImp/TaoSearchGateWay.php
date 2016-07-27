@@ -41,7 +41,8 @@ class TaoSearchGateWay extends AbstractSearchGateWay
      * not implemented just use to print query
      * @todo use generis persistence
      */
-    public function search() {
+    public function search(QueryBuilderInterface $Builder) {
+        $this->parse($Builder);
         return $this->parsedQuery;
     }
     
@@ -53,4 +54,9 @@ class TaoSearchGateWay extends AbstractSearchGateWay
         echo $this->parsedQuery;
         return $this;
     }
+
+    public function count(\oat\taoSearch\model\search\QueryBuilderInterface $Builder) {
+         return $this->getParser()->setCriteriaList($Builder)->count(true)->parse(); 
+    }
+
 }
