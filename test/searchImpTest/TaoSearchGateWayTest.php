@@ -51,13 +51,19 @@ class TaoSearchGateWayTest extends \oat\taoSearch\test\UnitTestHelper {
     }
     
     public function testSearch() {
+        
+        $this->instance = $this->getMock('\oat\taoSearch\model\searchImp\TaoSearchGateWay' , ['parse']);
+        $builderMock = $this->prophesize('oat\taoSearch\model\search\QueryBuilderInterface')->reveal();
+        
         $fixtureQuery = 'select * from toto where id = 2';
+        
+        $this->instance->expects($this->once())
+                ->method('parse')
+                ->with($builderMock)
+                ->willReturn($fixtureQuery);
+        
         $this->setInaccessibleProperty($this->instance, 'parsedQuery', $fixtureQuery);
-        ob_start();
-        $this->instance->search();
-        $contents = ob_get_contents();
-        ob_end_clean();
-        $this->assertSame( '<pre>'.$fixtureQuery.'<pre>', $contents);
+        $this->assertSame( $fixtureQuery, $this->instance->search($builderMock));
     }
 
     public function teaDown() {

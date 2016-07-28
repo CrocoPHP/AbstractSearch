@@ -48,7 +48,7 @@ class AbstractRdfOperator extends AbstractOperatorConverter {
             $name = $this->getDriverEscaper()->escape($name);
             $name = $this->getDriverEscaper()->quote($name);
             return $this->getDriverEscaper()->reserved('predicate') . ' = ' . $name . ' ' 
-                    . $this->getDriverEscaper()->dbCommand('AND ') . ' (';
+                    . $this->getDriverEscaper()->dbCommand('AND') . ' ( ';
         }
         return '';
     }

@@ -99,6 +99,7 @@ class QueryTest extends UnitTestHelper {
         
         
         $mockQuery = $this->prophesize('\oat\taoSearch\model\searchImp\QueryParam');
+        $mockQuery->setParent($this->instance)->willreturn($mockQuery);
         $mockQuery = $mockQuery->reveal();
         
         $mockFactoryProphecy = $this->prophesize('\oat\taoSearch\model\factory\FactoryInterface');

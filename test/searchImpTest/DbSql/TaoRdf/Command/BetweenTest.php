@@ -59,7 +59,7 @@ class BetweenTest extends UnitTestHelper {
                 '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND',
                 [0 , 5] ,
                 '"0" AND "5"',
-                '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND (`object` BETWEEN "0" AND "5")', 
+                '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND `object` BETWEEN "0" AND "5" ', 
                 false,
             ],
             [

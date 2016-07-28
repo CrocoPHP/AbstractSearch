@@ -81,6 +81,7 @@ class QueryBuilderTest extends UnitTestHelper {
         $mockServiceManager = $ServiceManager->reveal();
  
         $mockQuery = $this->prophesize('\oat\taoSearch\model\searchImp\Query');
+        $mockQuery->setParent($this->instance)->willreturn($mockQuery);
         $mockQuery = $mockQuery->reveal();
         
         $mockFactoryProphecy = $this->prophesize('\oat\taoSearch\model\factory\FactoryInterface');
@@ -94,6 +95,6 @@ class QueryBuilderTest extends UnitTestHelper {
         $this->setInaccessibleProperty($this->instance , 'serviceLocator', $mockServiceManager);
         
         $this->assertSame($mockQuery , $this->instance->newQuery());
-        $this->assertTrue(in_array($mockQuery , $this->getInaccessibleProperty($this->instance , 'storedQueries')));
+        
     }
 }

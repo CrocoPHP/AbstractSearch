@@ -57,7 +57,7 @@ $Builder->criteria()->add('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
         ->add('http://www.w3.org/2000/01/rdf-schema#label')
         ->contain('Dallas');
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 echo "sample 2 :\n";
 $Builder = $GateWay->query();
@@ -68,7 +68,7 @@ $Query = $Builder->criteria()
         ->add('http://www.w3.org/2000/01/rdf-schema#label')
         ->contain('Best');
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 $Builder = $GateWay->query();
 $Query = $Builder->criteria()
@@ -78,7 +78,7 @@ $Query = $Builder->criteria()
         ->add('http://www.w3.org/2000/01/rdf-schema#label')
         ->contain('Bes');
 echo "sample 3 :\n";
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 $Builder = $GateWay->query();
 $Query = $Builder->criteria();
@@ -87,7 +87,7 @@ $Query->add('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')->equal('http://ww
 $Query->add('http://www.w3.org/2000/01/rdf-schema#label')->contain('Bes');
 $Query->add('http://www.taotesting.com/movies.rdf#year')->contain('2013');
 echo "sample 4 :\n";
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 $Builder = $GateWay->query();
@@ -96,7 +96,7 @@ $Query = $Builder->criteria();
 $Query->add('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')->equal('http://www.taotesting.com/movies.rdf#Movie');
 $Query->add('http://www.taotesting.com/movies.rdf#year')->contain('2013');
 echo "sample 5 :\n";
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 $Builder = $GateWay->query();
@@ -112,7 +112,7 @@ $Builder->sort(
         ]
         );
 echo "sample 6 :\n";
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 echo "sample 7 :\n";
@@ -140,7 +140,7 @@ $Query->add('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')->equal('http://ww
 $Query->add('http://www.w3.org/2000/01/rdf-schema#label')->contain('Bes')->addOr('gen')->addOr('獣電戦隊');
 $Query->add('http://www.taotesting.com/movies.rdf#year')->match('2013');
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 echo "sample 8 :\n";
@@ -174,7 +174,7 @@ $Query->add('http://www.taotesting.com/movies.rdf#year')->match('2013');
 
 $Builder->sort(["http://www.w3.org/2000/01/rdf-schema#label" => 'asc']);
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 echo "sample 9 :\n";
@@ -200,7 +200,7 @@ $Query = $Builder->criteria();
 $Query->add('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')->equal('http://www.taotesting.com/movies.rdf#Movie');
 $Query->add('http://www.taotesting.com/movies.rdf#starring')->equal('http://www.taotesting.com/movies.rdf#RhysWakefield');
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 echo "sample 10 :\n";
@@ -231,7 +231,7 @@ $Query->add('http://www.taotesting.com/movies.rdf#starring')->equal('http://www.
 $Query->add('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')->equal('http://www.taotesting.com/movies.rdf#Movie');
 $Query->add('http://www.taotesting.com/movies.rdf#directedBy')->equal('http://www.taotesting.com/movies.rdf#PeterJackson');
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 echo "sample 11 :\n";
@@ -268,7 +268,7 @@ $Query->add('http://www.taotesting.com/movies.rdf#directedBy')->equal('http://ww
 
 $Builder->sort(["http://www.w3.org/2000/01/rdf-schema#label" => 'desc']);
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 echo "sample 12 :\n";
@@ -298,7 +298,7 @@ $Query->add('http://www.taotesting.com/movies.rdf#year')->match('2013');
 
 $Builder->setOffset(15);
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 echo "sample 13 :\n";
@@ -331,7 +331,7 @@ $Query->add('http://www.taotesting.com/movies.rdf#year')->match('2013');
 
 $Builder->sort(['http://www.w3.org/2000/01/rdf-schema#label' => 'desc'])->setOffset(15);
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 echo "sample 14 :\n";
@@ -351,8 +351,8 @@ Property Filters:
  */
 
 $GateWay->setOptions([
-                                'table'    => 'statements',
-                                'driver'   => 'taoRdf',
+                                'table'           => 'statements',
+                                'driver'          => 'taoRdf',
                                 'defaultLanguage' => 'en-US',
                             ]);
 $Builder = $GateWay->query();
@@ -362,7 +362,7 @@ $Query->add('http://www.taotesting.com/movies.rdf#year')->match('2013');
 $Query->add('http://www.taotesting.com/movies.rdf#directedBy')->match('http://www.taotesting.com/movies.rdf#ValC3A9rieLemercier');
 $Query->add('http://www.taotesting.com/movies.rdf#starring')->match('http://www.taotesting.com/movies.rdf#ValC3A9rieLemercier');
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 echo "sample 15 :\n";
@@ -404,7 +404,7 @@ $Builder = $GateWay->query()
         ->getParent()
         ->builder();
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";
 
 echo "sample 16 :\n";
@@ -445,5 +445,5 @@ $Builder = $GateWay->query()
             ])
         ->setOffset(10 , 10);
 
-$sql = $GateWay->parse($Builder)->search();
+echo $GateWay->search($Builder);
 echo "\n";

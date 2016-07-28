@@ -47,17 +47,11 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
         
         $instance->expects($this->once())->method('getOptions')->willReturn($fixtureOptions);
         $instance->expects($this->once())->method('validateOptions')->with($fixtureOptions)->willReturn(true);
-        $instance->expects($this->once())->method('setFieldList')->with($fixtureOptions)->willReturn('*');
-        $instance->expects($this->once())->method('initQuery')->with(
-                '*' ,
-                '(`l_language` = "fr-FR" OR `l_language` = "")',
-                '(`l_language` = "fr-FR")'
-                )->willReturn($fixtureQuery);
-        $instance->expects($this->exactly(2))
+        $instance->expects($this->once())->method('initQuery')->with()->willReturn($fixtureQuery);
+        $instance->expects($this->once())
                 ->method('setLanguageCondition')
-                ->withConsecutive([$fixtureLanguage] , [$fixtureLanguage , true])
-                ->willReturnOnConsecutiveCalls(
-                        '(`l_language` = "fr-FR")', 
+                ->with($fixtureLanguage , true)
+                ->willReturn(
                         '(`l_language` = "fr-FR" OR `l_language` = "")'
                         );
         
@@ -74,33 +68,24 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
             'language' => $fixtureLanguage,
         ];
         
-        $fixtureFields   = '*';
-        $fixturelanguageEmpty = '(`l_language` = "fr-FR" OR `l_language` = "") AND';
-        $fixturelanguageStrict = '(`l_language` = "fr-FR") AND';
-        
-        $expectedQuery = "SELECT * FROM `test` WHERE
-(`l_language` = \"fr-FR\" OR `l_language` = \"\") AND `subject` IN
-(SELECT `subject` FROM 
-(SELECT DISTINCT
-(`subject`) FROM `test` WHERE
-(`l_language` = \"fr-FR\") AND (";
+        $expectedQuery = 'SELECT DISTINCT(`subject`)  FROM `test`  WHERE `subject` IN (SELECT `subject` FROM  (SELECT DISTINCT(`subject`)  FROM `test` WHERE ';
         
         $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
         
-        $DriverProphecy->dbCommand('SELECT') ->willReturn('SELECT')->shouldBeCalledTimes(3); 
+        $DriverProphecy->dbCommand('SELECT') ->willReturn('SELECT')->shouldBeCalledTimes(3);  
         $DriverProphecy->dbCommand('FROM')->willReturn('FROM')->shouldBeCalledTimes(3);    
         $DriverProphecy->reserved($fixtureTable)->willReturn('`'.$fixtureTable.'`')->shouldBeCalledTimes(2);           
         $DriverProphecy->dbCommand('WHERE')->willReturn('WHERE')->shouldBeCalledTimes(2); 
         $DriverProphecy->dbCommand('IN')->willReturn('IN')->shouldBeCalledTimes(1);
-        $DriverProphecy->reserved('subject')->willReturn('`subject`')->shouldBeCalledTimes(3);    
-        $DriverProphecy->dbCommand('DISTINCT')->willReturn('DISTINCT')->shouldBeCalledTimes(1);
+        $DriverProphecy->reserved('subject')->willReturn('`subject`')->shouldBeCalledTimes(4);    
+        $DriverProphecy->dbCommand('DISTINCT')->willReturn('DISTINCT')->shouldBeCalledTimes(2);
         
         $DriverMock = $DriverProphecy->reveal();
         
-        $this->setInaccessibleProperty($this->instance, 'operationSeparator', "\n");
+        $this->setInaccessibleProperty($this->instance, 'operationSeparator', " ");
         $this->setInaccessibleProperty($this->instance, 'options', $fixtureOptions);
         $this->setInaccessibleProperty($this->instance, 'driverEscaper', $DriverMock);
-        $this->assertSame($expectedQuery, $this->invokeProtectedMethod($this->instance,'initQuery' , [$fixtureFields ,$fixturelanguageEmpty,$fixturelanguageStrict ]));
+        $this->assertSame($expectedQuery, $this->invokeProtectedMethod($this->instance,'initQuery'));
     }
     
     public function setLanguageConditionProvider() {
@@ -139,27 +124,31 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
     }
     
     public function testAddOperator() {
-        $prefix = '( `subject` `IN`' . "\n" . '(`SELECT` `DISTINCT` `subject` `FROM` `statements` `WHERE`';
+        $prefix = '( `subject` IN' . "\n" . '(SELECT DISTINCT `subject` FROM `statements` WHERE';
         $fixtureExpression = '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND `object` = "test")';
-        $expected          = $prefix . "\n" . $fixtureExpression . '))';
+
+        $language = '(`l_language` = fr-FR OR `l_language` = "") AND ';
+        $expected = $prefix . "\n" . $language . "\n" . $fixtureExpression . '))';
         
         $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
         
         $DriverProphecy->reserved('subject')->willReturn('`subject`')->shouldBeCalledTimes(2);
         $DriverProphecy->reserved('statements')->willReturn('`statements`')->shouldBeCalledTimes(1);
-        $DriverProphecy->dbCommand('SELECT')->willReturn('`SELECT`')->shouldBeCalledTimes(1);
-        $DriverProphecy->dbCommand('FROM')->willReturn('`FROM`')->shouldBeCalledTimes(1);
-        $DriverProphecy->dbCommand('WHERE')->willReturn('`WHERE`')->shouldBeCalledTimes(1);
-        $DriverProphecy->dbCommand('DISTINCT')->willReturn('`DISTINCT`')->shouldBeCalledTimes(1);
-        $DriverProphecy->dbCommand('IN')->willReturn('`IN`')->shouldBeCalledTimes(1);
+        $DriverProphecy->dbCommand('SELECT')->willReturn('SELECT')->shouldBeCalledTimes(1);
+        $DriverProphecy->dbCommand('FROM')->willReturn('FROM')->shouldBeCalledTimes(1);
+        $DriverProphecy->dbCommand('WHERE')->willReturn('WHERE')->shouldBeCalledTimes(1);
+        $DriverProphecy->dbCommand('DISTINCT')->willReturn('DISTINCT')->shouldBeCalledTimes(1);
+        $DriverProphecy->dbCommand('IN')->willReturn('IN')->shouldBeCalledTimes(1);
         
         $DriverMock = $DriverProphecy->reveal();
         
+        $this->setInaccessibleProperty($this->instance, 'language', $language);
         $this->setInaccessibleProperty($this->instance, 'operationSeparator', "\n");
         $this->setInaccessibleProperty($this->instance, 'options', ['table' => 'statements']);
         $this->setInaccessibleProperty($this->instance, 'driverEscaper', $DriverMock);
         
         $this->assertSame($this->instance, $this->invokeProtectedMethod($this->instance,'addOperator' , [$fixtureExpression]));
+        
         $this->assertSame($expected , $this->getInaccessibleProperty($this->instance, 'query'));
     }
     
@@ -219,7 +208,7 @@ class QueryParserTest extends oat\taoSearch\test\UnitTestHelper {
         $limitString   = 'LIMIT 20 OFFSET 10';
         $sortString    = 'ORDER BY `date` ASC';
         
-        $expected      = ') LIMIT 20 OFFSET 10 ) '. "\n" .
+        $expected      = ' LIMIT 20 OFFSET 10 ) '. "\n" .
                          'AS subQuery ) ' . "\n" .
                          'ORDER BY `date` ASC';
         

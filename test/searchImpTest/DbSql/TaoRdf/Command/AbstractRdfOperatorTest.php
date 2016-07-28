@@ -60,7 +60,7 @@ class AbstractRdfOperatorTest extends UnitTestHelper {
                 ['getDriverEscaper']
                 );
         
-        $expected = '(`predicate` = "' . $fixtureName . '") AND';
+        $expected = '`predicate` = "' . $fixtureName . '" AND ( ';
         
         $DriverProphecy = $this->prophesize('oat\taoSearch\model\search\Query\EscaperInterface');
         $DriverProphecy->escape($fixtureName)->willReturn($fixtureName)->shouldBeCalledTimes(1);

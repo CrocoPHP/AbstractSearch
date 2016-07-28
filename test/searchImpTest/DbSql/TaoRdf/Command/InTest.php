@@ -61,7 +61,7 @@ class InTest extends UnitTestHelper {
                 '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND',
                 [0 , 5 , 10] ,
                 '("0" , "5" , "10")',
-                '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND (`object` IN ("0" , "5" , "10"))', 
+                '(`predicate` = "http://www.w3.org/2000/01/rdf-schema#label") AND `object` IN ("0" , "5" , "10") ', 
                 false,
             ],
             [

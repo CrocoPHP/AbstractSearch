@@ -100,7 +100,7 @@ class QueryParser extends AbstractSqlQueryParser {
                     $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
                     $this->getDriverEscaper()->reserved($table) . ' ' .
                     $this->operationSeparator .
-                    $this->getDriverEscaper()->dbCommand('WHERE') . 
+                    $this->getDriverEscaper()->dbCommand('WHERE') . ' ' .
                     $this->getDriverEscaper()->reserved('subject') . ' ' .
                     $this->getDriverEscaper()->dbCommand('IN') . 
                     $this->operationSeparator . '(' .
@@ -109,9 +109,9 @@ class QueryParser extends AbstractSqlQueryParser {
                     $this->getDriverEscaper()->dbCommand('FROM') . ' ' .
                     $this->operationSeparator . '(' .
                     $this->getDriverEscaper()->dbCommand('SELECT') . ' ' . 
-                    $this->getDriverEscaper()->dbCommand('DISTINCT') . 
-                    $this->operationSeparator .'(' .
+                    $this->getDriverEscaper()->dbCommand('DISTINCT') .'(' .
                     $this->getDriverEscaper()->reserved('subject') . ')' . ' ' . 
+                    $this->operationSeparator .
                     $this->getDriverEscaper()->dbCommand('FROM') . ' ' . 
                     $this->getDriverEscaper()->reserved($table) . ' ' .
                     $this->getDriverEscaper()->dbCommand('WHERE') .  
